@@ -19,6 +19,7 @@ class Dispatcher extends DispatcherCore
 				'rewrite' =>		array('regexp' => '[_a-zA-Z0-9-\pL]*'),
 			),
 		),
+        
 		'project_rule' => array(
 			'controller' =>	'project',
 			'rule' =>		'projects/{id}-{rewrite}',
@@ -27,6 +28,21 @@ class Dispatcher extends DispatcherCore
 				'rewrite' =>		array('regexp' => '[_a-zA-Z0-9-\pL]*'),
 			),
 		),
+        
+        
+        'call_rule' => array(
+			'controller' =>	'call',
+			'rule' =>		'calls/{id}',
+			'keywords' => array(
+				'id' =>				array('regexp' => '[0-9]+', 'param' => 'id'),
+				
+			),
+		),
+        
+        
+        
+    
+        
 		'course_rule' => array(
 			'controller' =>	'course',
 			'rule' =>		'courses/{id}-{rewrite}',
