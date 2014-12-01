@@ -137,7 +137,7 @@ class AdminCallsControllerCore extends AdminController
 		$this->fields_form = array(
 			'legend' => array(
 				'title' => $this->l('calls'),
-				'image' => '../img/admin/table.gif'
+				'image' => '../img/admin/date.png'
 			),
 			'input' => array(
 				array(

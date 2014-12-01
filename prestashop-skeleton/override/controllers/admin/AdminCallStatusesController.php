@@ -31,7 +31,7 @@ class AdminCallStatusesControllerCore extends AdminController
 		$this->fields_form = array(
 			'legend' => array(
 				'title' => $this->l('Call Status'),
-				'image' => '../img/admin/table.gif'
+				'image' => '../img/admin/date.png'
 			),
 			'input' => array(
 				array(
