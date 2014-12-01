@@ -51,6 +51,10 @@ class CallCore extends ObjectModel
 	
 	public $name;
 
+	//
+
+	public $deadlines; //TODO implement that later
+
 	// public $url;
 	
 	// public $registry_number;
@@ -117,7 +121,7 @@ class CallCore extends ObjectModel
 		),
 	);
 
-	public static function getCalls($id_lang = 0, $id_status = null, $id_funding_agency = null)
+	public static function getCalls($id_lang = 0, $id_status = null, $id_funding_agency = null, $id_type = null)
 	{
 		if (!$id_lang)
 			$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
@@ -136,6 +140,10 @@ class CallCore extends ObjectModel
 		if ($id_status)
 		{
 			$sql .= ' AND c.`id_call_status` = ' . (int)$id_status;
+		}
+		if ($id_type)
+		{
+			$sql .= ' AND c.`id_call_type` = ' . (int)$id_type;
 		}
 		if ($id_funding_agency)
 		{

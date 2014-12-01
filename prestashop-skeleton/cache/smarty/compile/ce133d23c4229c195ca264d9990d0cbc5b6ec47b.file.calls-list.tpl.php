@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2014-11-30 16:33:11
+<?php /* Smarty version Smarty-3.1.13, created on 2014-12-01 18:12:06
          compiled from "C:\xampp\htdocs\CallCalendar\prestashop-skeleton\themes\es\calls-list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5567547afeb5170760-68765619%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'ce133d23c4229c195ca264d9990d0cbc5b6ec47b' => 
     array (
       0 => 'C:\\xampp\\htdocs\\CallCalendar\\prestashop-skeleton\\themes\\es\\calls-list.tpl',
-      1 => 1417361577,
+      1 => 1417453901,
       2 => 'file',
     ),
   ),
@@ -23,13 +23,16 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'statuses' => 0,
     'status' => 0,
     'id_status' => 0,
+    'types' => 0,
+    'type' => 0,
+    'id_type' => 0,
     'funding_agencies' => 0,
     'funding_agency' => 0,
     'id_funding_agency' => 0,
     'number_of_calls' => 0,
     'calls' => 0,
-    'call' => 0,
     'project' => 0,
+    'call' => 0,
     'base_url' => 0,
     'top_funding_agencies' => 0,
   ),
@@ -50,6 +53,8 @@ $(document).ready(function()
 			url = url + 'status=' + $( "#selectStatus" ).val()
 		if ($( "#selectFunding" ).val() != "") 
 			url = url + '&funding=' + $( "#selectFunding" ).val()
+		if ($( "#selectType" ).val() != "") 
+			url = url + '&type=' + $( "#selectType" ).val()
 		document.location.href = url;
 	});
 });
@@ -77,6 +82,24 @@ $_smarty_tpl->tpl_vars['status']->_loop = true;
 </option>
 				<?php } ?>
 			</select>
+
+			<span style="left:290px;position:absolute;width:50px"><?php echo smartyTranslate(array('s'=>'Type:'),$_smarty_tpl);?>
+</span>
+			<select id="selectType" class="selectStatus" name="selectStatus" style="left:349px;position:absolute;width:185px;margin-top:-2px">
+				<option value="">--- all ---</option>
+				<?php  $_smarty_tpl->tpl_vars['type'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['type']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['types']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['type']->key => $_smarty_tpl->tpl_vars['type']->value){
+$_smarty_tpl->tpl_vars['type']->_loop = true;
+?>
+					<option value="<?php echo smarty_modifier_escape($_smarty_tpl->tpl_vars['type']->value['id_call_type'], 'htmlall', 'UTF-8');?>
+"
+					<?php if ($_smarty_tpl->tpl_vars['id_type']->value==$_smarty_tpl->tpl_vars['type']->value['id_call_type']){?>selected="selected"<?php }?>
+					><?php echo smarty_modifier_escape($_smarty_tpl->tpl_vars['type']->value['name'], 'htmlall', 'UTF-8');?>
+</option>
+				<?php } ?>
+			</select>
+
 		</div>
 		
 		<div style="margin-top:10px">
@@ -124,11 +147,13 @@ $_smarty_tpl->tpl_vars['call']->_loop = true;
 ?>
 			<tr>
 				<td class="projects-list-title">
-					<a href="calls/<?php echo $_smarty_tpl->tpl_vars['call']->value['id_call'];?>
-"><!--<?php if ($_smarty_tpl->tpl_vars['project']->value['acronym']!=''){?><?php echo smarty_modifier_regex_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace($_smarty_tpl->tpl_vars['project']->value['acronym'],"ö","o"),"Ö","O"),"ü","u"),"Ü","U"),"ä","a"),"Ä","A"),"å","a"),"Å","A"),"é","e"),"É","E"),"á","a"),"Á","A"),"/[^A-Za-z0-9]/","_");?>
+					<!--<a href="projects/<?php echo $_smarty_tpl->tpl_vars['project']->value['id_project'];?>
+-<?php if ($_smarty_tpl->tpl_vars['project']->value['acronym']!=''){?><?php echo smarty_modifier_regex_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace($_smarty_tpl->tpl_vars['project']->value['acronym'],"ö","o"),"Ö","O"),"ü","u"),"Ü","U"),"ä","a"),"Ä","A"),"å","a"),"Å","A"),"é","e"),"É","E"),"á","a"),"Á","A"),"/[^A-Za-z0-9]/","_");?>
 
 					<?php }else{ ?><?php echo smarty_modifier_regex_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace(smarty_modifier_replace($_smarty_tpl->tpl_vars['project']->value['name'],"ö","o"),"Ö","O"),"ü","u"),"Ü","U"),"ä","a"),"Ä","A"),"å","a"),"Å","A"),"é","e"),"É","E"),"á","a"),"Á","A"),"/[^A-Za-z0-9]/","_");?>
 <?php }?>">-->
+					<a href="calls/<?php echo $_smarty_tpl->tpl_vars['call']->value['id_call'];?>
+">
 						<?php echo smarty_modifier_escape($_smarty_tpl->tpl_vars['call']->value['title'], 'htmlall', 'UTF-8');?>
 
 					</a>

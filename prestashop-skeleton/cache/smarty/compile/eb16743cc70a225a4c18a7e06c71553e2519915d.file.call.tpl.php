@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2014-11-30 16:57:37
+<?php /* Smarty version Smarty-3.1.13, created on 2014-12-01 18:12:08
          compiled from "C:\xampp\htdocs\CallCalendar\prestashop-skeleton\themes\es\call.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:11345547b38b8832f92-16754825%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'eb16743cc70a225a4c18a7e06c71553e2519915d' => 
     array (
       0 => 'C:\\xampp\\htdocs\\CallCalendar\\prestashop-skeleton\\themes\\es\\call.tpl',
-      1 => 1417363056,
+      1 => 1417453903,
       2 => 'file',
     ),
   ),
@@ -58,7 +58,9 @@ if (!empty($_capture_buffer)) {
 			<br class="clearBoth">
 		</div>
 	<?php }?>	-->
+
 	
+
 	<?php if (isset($_smarty_tpl->tpl_vars['call']->value['status'])&&$_smarty_tpl->tpl_vars['call']->value['status']!=''){?>
 		<div class="centre-block">
 			<div class="div-label">
@@ -66,6 +68,32 @@ if (!empty($_capture_buffer)) {
 			</div>
 			<div class="div-content">
 				<?php echo $_smarty_tpl->tpl_vars['call']->value['status'];?>
+
+			</div>
+			<br class="clearBoth">
+		</div>
+	<?php }?>
+	
+	<?php if (isset($_smarty_tpl->tpl_vars['call']->value['type'])&&$_smarty_tpl->tpl_vars['call']->value['type']!=''){?>
+		<div class="centre-block">
+			<div class="div-label">
+				<h3>Type:</h3>
+			</div>
+			<div class="div-content">
+				<?php echo $_smarty_tpl->tpl_vars['call']->value['type'];?>
+
+			</div>
+			<br class="clearBoth">
+		</div>
+	<?php }?>
+
+	<?php if (isset($_smarty_tpl->tpl_vars['call']->value['type'])&&$_smarty_tpl->tpl_vars['call']->value['type']!=''){?>
+		<div class="centre-block">
+			<div class="div-label">
+				<h3>Funding agency:</h3>
+			</div>
+			<div class="div-content">
+				<?php echo $_smarty_tpl->tpl_vars['call']->value['agency'];?>
 
 			</div>
 			<br class="clearBoth">
@@ -84,6 +112,32 @@ if (!empty($_capture_buffer)) {
 			<br class="clearBoth">
 		</div>
 	<?php }?>
+
+	<?php if (isset($_smarty_tpl->tpl_vars['call']->value['budget'])&&$_smarty_tpl->tpl_vars['call']->value['budget']!="0"){?>
+		<div class="centre-block">
+			<div class="div-label">
+				<h3>Budget:</h3>
+			</div>
+			<div class="div-content">
+				<?php echo $_smarty_tpl->tpl_vars['call']->value['budget'];?>
+ <!-- |replace:'-00':''|replace:'0000':''} -->
+			</div>
+			<br class="clearBoth">
+		</div>
+	<?php }?>
+
+	<?php if (isset($_smarty_tpl->tpl_vars['call']->value['repeating'])){?>
+		<div class="centre-block">
+			<div class="div-label">
+				<h3>Repeating:</h3>
+			</div>
+			<div class="div-content">
+				<?php echo smarty_modifier_replace(smarty_modifier_replace($_smarty_tpl->tpl_vars['call']->value['repeating'],'0','NO'),'1','YES');?>
+
+			</div>
+			<br class="clearBoth">
+		</div>
+	<?php }?>
 	
 	<?php if (isset($_smarty_tpl->tpl_vars['call']->value['url_to_call'])&&$_smarty_tpl->tpl_vars['call']->value['url_to_call']!=''){?>
 	<div class="centre-block">
@@ -97,7 +151,7 @@ if (!empty($_capture_buffer)) {
 			</div>
 			<br class="clearBoth">
 		</div>
-				<?php }?>
+	<?php }?>
 	<div id="tabs">
 		<ul>
 			<?php if (isset($_smarty_tpl->tpl_vars['call']->value['description'])&&$_smarty_tpl->tpl_vars['call']->value['description']!=''){?>

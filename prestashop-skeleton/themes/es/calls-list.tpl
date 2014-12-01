@@ -10,6 +10,8 @@ $(document).ready(function()
 			url = url + 'status=' + $( "#selectStatus" ).val()
 		if ($( "#selectFunding" ).val() != "") 
 			url = url + '&funding=' + $( "#selectFunding" ).val()
+		if ($( "#selectType" ).val() != "") 
+			url = url + '&type=' + $( "#selectType" ).val()
 		document.location.href = url;
 	});
 });
@@ -29,6 +31,17 @@ $(document).ready(function()
 					>{$status.name|escape:'htmlall':'UTF-8'}</option>
 				{/foreach}
 			</select>
+
+			<span style="left:290px;position:absolute;width:50px">{l s='Type:'}</span>
+			<select id="selectType" class="selectStatus" name="selectStatus" style="left:349px;position:absolute;width:185px;margin-top:-2px">
+				<option value="">--- all ---</option>
+				{foreach from=$types item=type name=types}
+					<option value="{$type.id_call_type|escape:'htmlall':'UTF-8'}"
+					{if $id_type eq $type.id_call_type}selected="selected"{/if}
+					>{$type.name|escape:'htmlall':'UTF-8'}</option>
+				{/foreach}
+			</select>
+
 		</div>
 		
 		<div style="margin-top:10px">
@@ -65,8 +78,9 @@ $(document).ready(function()
 			{foreach from=$calls item=call name=call}
 			<tr>
 				<td class="projects-list-title">
-					<a href="calls/{$call.id_call}"><!--{if $project.acronym!=''}{$project.acronym|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}
+					<!--<a href="projects/{$project.id_project}-{if $project.acronym!=''}{$project.acronym|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}
 					{else}{$project.name|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}{/if}">-->
+					<a href="calls/{$call.id_call}">
 						{$call.title|escape:'htmlall':'UTF-8'}
 					</a>
 				</td>

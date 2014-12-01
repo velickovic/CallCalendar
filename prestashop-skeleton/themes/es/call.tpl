@@ -21,7 +21,9 @@
 			<br class="clearBoth">
 		</div>
 	{/if}	-->
+
 	
+
 	{if isset($call.status) && $call.status != ""}
 		<div class="centre-block">
 			<div class="div-label">
@@ -29,6 +31,30 @@
 			</div>
 			<div class="div-content">
 				{$call.status}
+			</div>
+			<br class="clearBoth">
+		</div>
+	{/if}
+	
+	{if isset($call.type) && $call.type != ""}
+		<div class="centre-block">
+			<div class="div-label">
+				<h3>Type:</h3>
+			</div>
+			<div class="div-content">
+				{$call.type}
+			</div>
+			<br class="clearBoth">
+		</div>
+	{/if}
+
+	{if isset($call.type) && $call.type != ""}
+		<div class="centre-block">
+			<div class="div-label">
+				<h3>Funding agency:</h3>
+			</div>
+			<div class="div-content">
+				{$call.agency}
 			</div>
 			<br class="clearBoth">
 		</div>
@@ -45,6 +71,30 @@
 			<br class="clearBoth">
 		</div>
 	{/if}
+
+	{if isset($call.budget) && $call.budget != "0"}
+		<div class="centre-block">
+			<div class="div-label">
+				<h3>Budget:</h3>
+			</div>
+			<div class="div-content">
+				{$call.budget} <!-- |replace:'-00':''|replace:'0000':''} -->
+			</div>
+			<br class="clearBoth">
+		</div>
+	{/if}
+
+	{if isset($call.repeating)}
+		<div class="centre-block">
+			<div class="div-label">
+				<h3>Repeating:</h3>
+			</div>
+			<div class="div-content">
+				{$call.repeating|replace:'0':'NO'|replace:'1':'YES'}
+			</div>
+			<br class="clearBoth">
+		</div>
+	{/if}
 	
 	{if isset($call.url_to_call) && $call.url_to_call!=''}
 	<div class="centre-block">
@@ -56,7 +106,7 @@
 			</div>
 			<br class="clearBoth">
 		</div>
-				{/if}
+	{/if}
 	<div id="tabs">
 		<ul>
 			{if isset($call.description) && $call.description != ""}
