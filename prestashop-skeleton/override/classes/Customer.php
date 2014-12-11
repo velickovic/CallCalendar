@@ -29,6 +29,8 @@ class Customer extends CustomerCore
 	public $inputMainSupervision;
 	public $inputAssistantSupervision;
 	public $initiativeRoleSelect;
+	public $subscription;
+	public $keywords;
 				
 	public static $definition = array(
 		'table' => 'customer',
@@ -88,7 +90,10 @@ class Customer extends CustomerCore
 			'duties' => 					array('type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml', 'required' => false,  'size' => 3999999999999),
 			'misc' =>	 					array('type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml', 'required' => false, 'size' => 3999999999999),
 			'external' => 					array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
-			'away' =>	 					array('type' => self::TYPE_BOOL, 'validate' => 'isBool')
+			'away' =>	 					array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
+			'subscription' =>	 			array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
+			'keywords' => 					array('type' => self::TYPE_STRING, 'lang' => true, 'required' => false, 'size' => 32),
+			
 		),
 	);				
 

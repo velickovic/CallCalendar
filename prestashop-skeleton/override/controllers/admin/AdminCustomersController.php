@@ -352,7 +352,35 @@ class AdminCustomersController extends AdminCustomersControllerCore
 					'name' => 'organisation',
 					'size' => 33,
 					'required' => false,
-				)			
+				),
+				array(
+					'type' => 'radio',
+					'label' => $this->l('Subscription:'),
+					'name' => 'active',
+					'required' => false,
+					'class' => 't',
+					'is_bool' => true,
+					'values' => array(
+						array(
+							'id' => 'active_on',
+							'value' => 1,
+							'label' => $this->l('Enabled')
+						),
+						array(
+							'id' => 'active_off',
+							'value' => 0,
+							'label' => $this->l('Disabled')
+						)
+					),
+					'desc' => $this->l('Subscription to notifications about projects:')
+				),	
+				array(
+					'type' => 'text',
+					'label' => $this->l('Keywords:'),
+					'name' => 'keywords',
+					'size' => 33,
+					'required' => false,
+				)				
 			)
 		);
 
@@ -379,6 +407,11 @@ class AdminCustomersController extends AdminCustomersControllerCore
 			$this->fields_value['biography_'.$language['id_lang']] = htmlentities(stripslashes($this->getFieldValue(
 				$obj,
 				'biography',
+				$language['id_lang']
+			)), ENT_COMPAT, 'UTF-8');
+			$this->fields_value['keywords_'.$language['id_lang']] = htmlentities(stripslashes($this->getFieldValue(
+				$obj,
+				'keywords',
 				$language['id_lang']
 			)), ENT_COMPAT, 'UTF-8');
 		}
