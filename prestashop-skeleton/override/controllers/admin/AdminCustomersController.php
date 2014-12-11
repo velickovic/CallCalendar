@@ -378,6 +378,7 @@ class AdminCustomersController extends AdminCustomersControllerCore
 					'type' => 'text',
 					'label' => $this->l('Keywords:'),
 					'name' => 'keywords',
+					'lang' => true,
 					'size' => 33,
 					'required' => false,
 				)				
