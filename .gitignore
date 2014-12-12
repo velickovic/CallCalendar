@@ -1,0 +1,3 @@
+# ignoring cache files
+prestashop-skeleton/cache/*
+
