@@ -225,11 +225,11 @@ class AdminCallsControllerCore extends AdminController
 				),
 				array(
 					'type' => 'text',
-					'label' => $this->l('Budget of the project:'),
+					'label' => $this->l('Budget of the call:'),
 					'name' => 'budget',
 					'size' => 20,
 					'required' => false,
-					'desc'=>"Input the budget of the call as an integer value (not displayed on the web)"
+					// 'desc'=>"Input the budget of the call as an integer value (not displayed on the web)"
 				),
 				array(
 					'type' => 'text',
