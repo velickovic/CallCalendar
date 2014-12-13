@@ -129,7 +129,7 @@ class AdminDeadlinesControllerCore extends AdminController
 					)
 				),
 				array(
-					'type' => 'datetime',
+					'type' => 'date',
 					'label' => $this->l('Select deadline date:'),
 					'name' => 'deadline',
 					'size' => 20,
