@@ -131,6 +131,9 @@ class AdminProjectsControllerCore extends AdminController
 		$associated = $project->getAssociated();
 		
 		
+        $partners = Partner::getPartners($this->context->language->id);
+	$partner_types=PartnerType::getPartnerTypes($this->context->language->id);
+        
 		$this->fields_form = array(
 			'legend' => array(
 				'title' => $this->l('projects'),
@@ -176,7 +179,19 @@ class AdminProjectsControllerCore extends AdminController
 					'name' => 'date_end',
 					'size' => 20,
 					'required' => false
-				),		
+				),
+                
+                //dodato naknadno->
+               array(
+					'type' => 'partner',
+					'label' => $this->l('Related Partners:'),
+					'name' => 'partnerBox',
+					'values' => $partners,
+					'partner_types'=>$partner_types,
+					'required' => false,
+					'desc' => $this->l('Select the partner(s) this project is related to')
+				),
+                
 				array(
 					'type' => 'select',
 					'label' => $this->l('Project Type:'),
@@ -354,6 +369,21 @@ class AdminProjectsControllerCore extends AdminController
 		foreach ($funding_agencies as $funding_agency)
 			$this->fields_value['fundingAgencyBox_'.$funding_agency['id_funding_agency']] = 
 				Tools::getValue('fundingAgencyBox_'.$funding_agency['id_funding_agency'], in_array($funding_agency['id_funding_agency'], $related_funding_agencies_ids));
+        
+        
+        
+        //dodato
+        
+        $related_partners = $project->getProjectRelatedPartners();
+		$related_partners_ids = array();
+if (is_array($related_partners))
+			foreach ($related_partners as $related_partner)
+				$related_partners_ids[] = $related_partner['id_partner'];
+				
+		if (is_array($partners))
+		foreach ($partners as $partner)
+			$this->fields_value['partnerBox_'.$partner['id_partner']] = 
+				Tools::getValue('partnerBox_'.$partner['id_partner'], in_array($partner['id_partner'], $related_partners_ids));
 
 		$this->fields_form['submit'] = array(
 			'title' => $this->l('   Save   '),

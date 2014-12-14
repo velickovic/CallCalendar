@@ -1,8 +1,8 @@
 <?php
-define('_DB_SERVER_', 'localhost');
+define('_DB_SERVER_', '193.11.136.61:3306');
 define('_DB_NAME_', 'call_calendar');
 define('_DB_USER_', 'root');
-define('_DB_PASSWD_', '');
+define('_DB_PASSWD_', 'DSD#r00t$14');
 define('_DB_PREFIX_', 'ps_');
 define('_MYSQL_ENGINE_', 'InnoDB');
 define('_PS_CACHING_SYSTEM_', 'CacheFs');

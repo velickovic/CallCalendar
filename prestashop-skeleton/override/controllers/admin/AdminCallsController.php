@@ -134,6 +134,12 @@ class AdminCallsControllerCore extends AdminController
 		
 		$funding_agencies = FundingAgency::getFundingAgencies($this->context->language->id);
 		
+        
+        
+        //dodato za partners
+         $partners = Partner::getPartners($this->context->language->id);
+	$partner_types=PartnerType::getPartnerTypes($this->context->language->id);
+        
 		$this->fields_form = array(
 			'legend' => array(
 				'title' => $this->l('calls'),
@@ -201,6 +207,18 @@ class AdminCallsControllerCore extends AdminController
 						)
 					)
 				),
+                
+                //dodato naknadno->
+               array(
+					'type' => 'partner',
+					'label' => $this->l('Related Partners:'),
+					'name' => 'partnerBox',
+					'values' => $partners,
+					'partner_types'=>$partner_types,
+					'required' => false,
+					'desc' => $this->l('Select the partner(s) this project is related to')
+				),
+                
 				array(
 					'type' => 'select',
 					'label' => $this->l('Funding Agency:'),
