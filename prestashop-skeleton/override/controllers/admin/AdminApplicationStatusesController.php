@@ -31,7 +31,7 @@ class AdminApplicationStatusesControllerCore extends AdminController
 		$this->fields_form = array(
 			'legend' => array(
 				'title' => $this->l('Application Status'),
-				'image' => '../img/admin/date.png'
+				'image' => '../img/admin/note.png'
 			),
 			'input' => array(
 				array(

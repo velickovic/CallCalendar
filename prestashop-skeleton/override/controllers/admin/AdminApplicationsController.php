@@ -139,8 +139,8 @@ class AdminApplicationsControllerCore extends AdminController
 		
 		$this->fields_form = array(
 			'legend' => array(
-				'title' => $this->l('applications'),
-				'image' => '../img/admin/table.gif'
+				'title' => $this->l('Applications'),
+				'image' => '../img/admin/note.png'
 			),
 			'input' => array(
 				array(
