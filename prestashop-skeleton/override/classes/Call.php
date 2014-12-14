@@ -37,6 +37,8 @@ class CallCore extends ObjectModel
 
  	public $budget;
 
+ 	public $acronym;
+
  	public $planed_project_start;
 	
  	public $repeating;
@@ -44,6 +46,8 @@ class CallCore extends ObjectModel
 	public $url_to_call;
 
 	public $description;
+
+	public $keywords;
 	
 	public $requirements;
 	
@@ -114,7 +118,9 @@ class CallCore extends ObjectModel
 
 			//Lang fields
 			'title' => 				array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isString', 'required' => true, 'size' => 255),
+			'acronym' => 			array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isString', 'size' => 32),
 			'description' =>		array('type' => self::TYPE_HTML, 'lang' => true,'validate' => 'isCleanHtml'),
+			'keywords' =>		array('type' => self::TYPE_HTML, 'lang' => true,'validate' => 'isCleanHtml'),
 			'requirements' =>		array('type' => self::TYPE_HTML, 'lang' => true,'validate' => 'isCleanHtml'),
 			// 'name' => 				array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isString', 'required' => true, 'size' => 255),
 
@@ -126,7 +132,7 @@ class CallCore extends ObjectModel
 		if (!$id_lang)
 			$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
 		
-		$sql = 'SELECT DISTINCT c.*, cl.`title`, cl.`description`, cl.`requirements`, ctl.`name` AS type, csl.`name` AS status, fal.`name` AS agency
+		$sql = 'SELECT DISTINCT c.*, cl.`title`, cl.`acronym`, cl.`description`, cl.`keywords`, cl.`requirements`, ctl.`name` AS type, csl.`name` AS status, fal.`name` AS agency
 		FROM `'._DB_PREFIX_.'call` c
 		LEFT JOIN `'._DB_PREFIX_.'call_lang` AS cl ON (c.`id_call` = cl.`id_call` AND cl.`id_lang` = '.(int)$id_lang.')
 		LEFT JOIN `'._DB_PREFIX_.'call_type` ct ON c.`id_call_type` = ct.`id_call_type`
@@ -198,7 +204,7 @@ class CallCore extends ObjectModel
 			$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
 
 		$sql = '
-		SELECT c.*, cl.`title`, cl.`description`, cl.`requirements`, ctl.`name` AS type, csl.`name` AS status, fal.`name` AS agency
+		SELECT c.*, cl.`title`, cl.`acronym`, cl.`description`, cl.`keywords`, cl.`requirements`, ctl.`name` AS type, csl.`name` AS status, fal.`name` AS agency
 		FROM `'._DB_PREFIX_.'call` c
 		LEFT JOIN `'._DB_PREFIX_.'call_lang` AS cl ON (c.`id_call` = cl.`id_call` AND cl.`id_lang` = '.(int)$id_lang.')
 		LEFT JOIN `'._DB_PREFIX_.'call_type` ct ON c.`id_call_type` = ct.`id_call_type`
@@ -222,7 +228,7 @@ class CallCore extends ObjectModel
 		if (!$id_lang)
 			$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
-		SELECT DISTINCT c.*, cl.`title`, cl.`description`, cl.`requirements`, ctl.`name` AS type, csl.`name` AS status, fal.`name` AS agency
+		SELECT DISTINCT c.*, cl.`title`, cl.`acronym`, cl.`description`, cl.`keywords`, cl.`requirements`, ctl.`name` AS type, csl.`name` AS status, fal.`name` AS agency
 		FROM `'._DB_PREFIX_.'call` c
 		LEFT JOIN `'._DB_PREFIX_.'call_lang` AS cl ON (c.`id_call` = cl.`id_call` AND cl.`id_lang` = '.(int)$id_lang.')
 		LEFT JOIN `'._DB_PREFIX_.'call_type` ct ON c.`id_call_type` = ct.`id_call_type`
