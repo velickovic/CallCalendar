@@ -139,6 +139,9 @@ class AdminCallsControllerCore extends AdminController
 		
 		$funding_agencies = FundingAgency::getFundingAgencies($this->context->language->id);
 		
+        $partners = Partner::getPartners($this->context->language->id);
+		$partner_types=PartnerType::getPartnerTypes($this->context->language->id);
+        
 		$this->fields_form = array(
 			'legend' => array(
 				'title' => $this->l('calls'),
@@ -227,7 +230,7 @@ class AdminCallsControllerCore extends AdminController
 							'label' => $this->l('-- Choose --')
 						)
 					)
-				),
+				),        
 				array(
 					'type' => 'select',
 					'label' => $this->l('Funding Agency:'),
@@ -286,6 +289,15 @@ class AdminCallsControllerCore extends AdminController
 							'label' => $this->l('False')
 						)
 					)
+				),
+				array(
+					'type' => 'partner',
+					'label' => $this->l('Related Partners:'),
+					'name' => 'partnerBox',
+					'values' => $partners,
+					'partner_types'=>$partner_types,
+					'required' => false,
+					'desc' => $this->l('Select the partner(s) this project is related to')
 				)
 				
 			)
@@ -311,6 +323,18 @@ class AdminCallsControllerCore extends AdminController
 				$language['id_lang']
 			)), ENT_COMPAT, 'UTF-8');
 		}
+
+
+		$related_partners = $call->getCallRelatedPartners();
+		$related_partners_ids = array();
+		if (is_array($related_partners))
+			foreach ($related_partners as $related_partner)
+				$related_partners_ids[] = $related_partner['id_partner'];
+				
+		if (is_array($partners))
+		foreach ($partners as $partner)
+			$this->fields_value['partnerBox_'.$partner['id_partner']] = 
+				Tools::getValue('partnerBox_'.$partner['id_partner'], in_array($partner['id_partner'], $related_partners_ids));
 		
 		$this->fields_form['submit'] = array(
 			'title' => $this->l('   Save   '),

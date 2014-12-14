@@ -74,7 +74,7 @@ class CallCore extends ObjectModel
 	
 	// public $initiativeBox;
 	// public $fundingAgencyBox;
-	// public $partnerBox;
+	public $partnerBox;
 	
 	// public $inputLeaders;
 	// public $inputMembers;
@@ -127,7 +127,7 @@ class CallCore extends ObjectModel
 		),
 	);
 
-	public static function getCalls($id_lang = 0, $id_status = null, $id_funding_agency = null, $id_type = null)
+	public static function getCalls($id_lang = 0, $id_status = null, $id_funding_agency = null, $id_type = null, $id_partner=null)
 	{
 		if (!$id_lang)
 			$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
@@ -142,6 +142,11 @@ class CallCore extends ObjectModel
 		LEFT JOIN `'._DB_PREFIX_.'funding_agency` fa ON c.`id_funding_agency` = fa.`id_funding_agency`
 		LEFT JOIN `'._DB_PREFIX_.'funding_agency_lang` fal ON (fal.`id_funding_agency` = fa.`id_funding_agency` AND fal.`id_lang` = '.(int)$id_lang.')';		
 		
+		if($id_partner)
+		{
+			$sql .='LEFT JOIN `'._DB_PREFIX_.'call_partner` cp ON cp.`id_call` = c.`id_call`';
+		}
+
 		$sql.='WHERE 1 ';
 		if ($id_status)
 		{
@@ -154,6 +159,11 @@ class CallCore extends ObjectModel
 		if ($id_funding_agency)
 		{
 			$sql .= ' AND c.`id_funding_agency` = ' . (int)$id_funding_agency;
+		}
+		
+		if($id_partner)
+		{
+			$sql.=' AND cp.`id_partner`='.(int)$id_partner;
 		}
 		$sql .= ' ORDER BY cl.`title` ASC';//psl.`name` ASC, 
 		//echo $sql . '<br>'; 
@@ -218,6 +228,8 @@ class CallCore extends ObjectModel
 
 		$call = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
 
+		$call['partners'] = Call::getCallRelatedPartners($id_call); 
+
 		return $call;
 	}
 	
@@ -260,26 +272,23 @@ class CallCore extends ObjectModel
 		ORDER BY ptl.`name`, p.`id_project` ASC');
 	}
 	*/
-	
-
-/*	
-	we can use it if we change something in db
 
 	public function add($autodate = true, $null_values = true)
 	{
 		$success = parent::add($autodate, $null_values);
-		$this->updateProjectRelationships($this->initiativeBox,$this->fundingAgencyBox,$this->partnerBox);
-		$this->updateStaff($this->inputLeaders, $this->inputMembers, $this->inputAssociated);
+		$this->updateCallRelationships($this->partnerBox);
+		
 		
 		return $success;
 	}
+
 
 	public function update($nullValues = false)
 	{
 		if (Context::getContext()->controller->controller_type == 'admin')
 		{
-			$this->updateProjectRelationships($this->initiativeBox,$this->fundingAgencyBox,$this->partnerBox);
-			$this->updateStaff($this->inputLeaders, $this->inputMembers, $this->inputAssociated);
+			$this->updateCallRelationships($this->partnerBox);
+			
 		}
 		return parent::update(true);
 	}
@@ -287,14 +296,91 @@ class CallCore extends ObjectModel
 	{
 		if (parent::delete())
 		{
-			$this->cleanProjectRelationships();
-			Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'customer_project` WHERE `id_project` = '.(int)$this->id);
+			$this->cleanCallRelationships();
 
 			return true;
 		}
 		return false;
 	}
-*/
 	
+
+	public function getCallRelatedPartners($id_call = null, $id_lang = null)
+	{
+			if(!$id_call)
+				$id_call=(int)$this->id;
+			if (!$id_lang)
+				$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
+	
+			return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
+			SELECT cp.`id_partner`, pl.`name`, pl.`acronym`, pl.`city`,  cl.`name` AS country, ptl.`name` AS type, p.url
+			FROM `'._DB_PREFIX_.'call_partner` as cp
+			LEFT JOIN `'._DB_PREFIX_.'partner` p on cp.`id_partner` = p.`id_partner`
+			LEFT JOIN `'._DB_PREFIX_.'partner_lang` AS pl ON (cp.`id_partner` = pl.`id_partner` AND pl.`id_lang` = '.(int)$id_lang.')
+			LEFT JOIN `'._DB_PREFIX_.'partner_type_lang` AS ptl ON (p.`id_partner_type` = ptl.`id_partner_type` AND  ptl.`id_lang` = '.(int)$id_lang.')
+			LEFT JOIN `'._DB_PREFIX_.'country_lang` AS cl ON (p.`id_country` = cl.`id_country` AND  cl.`id_lang` = '.(int)$id_lang.')
+			WHERE cp.`id_call` = '.(int)$id_call.'
+			ORDER BY ptl.`name` ASC, pl.`name` ASC');
+
+	}
+
+
+	public function cleanCallPartners()
+	{
+		Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'call_partner` WHERE `id_call` = '.(int)$this->id);
+	}
+
+
+	public function cleanCallRelationships()
+	{
+		
+		Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'call_partner` WHERE `id_call` = '.(int)$this->id);
+
+
+	}
+
+
+	public function updateCallPartners($list)
+	{
+		$this->cleanCallPartners();
+		if ($list && !empty($list))
+			$this->addCallPartners($list);
+	}
+	public function updateCallRelationships($partner_list)
+	{
+		$this->cleanCallRelationships();
+			
+		if ($partner_list && !empty($partner_list))
+			$this->addCallPartners($partner_list);
+	}
+
+	public function addCallPartners($partners)
+	{
+		foreach ($partners as $partner)
+		{
+			$row = array('id_call' => (int)$this->id, 'id_partner' => (int)$partner);
+			Db::getInstance()->insert('call_partner', $row);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 }
