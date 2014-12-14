@@ -132,7 +132,7 @@ class AdminProjectsControllerCore extends AdminController
 		
 		
         $partners = Partner::getPartners($this->context->language->id);
-	$partner_types=PartnerType::getPartnerTypes($this->context->language->id);
+		$partner_types=PartnerType::getPartnerTypes($this->context->language->id);
         
 		$this->fields_form = array(
 			'legend' => array(
@@ -180,18 +180,6 @@ class AdminProjectsControllerCore extends AdminController
 					'size' => 20,
 					'required' => false
 				),
-                
-                //dodato naknadno->
-               array(
-					'type' => 'partner',
-					'label' => $this->l('Related Partners:'),
-					'name' => 'partnerBox',
-					'values' => $partners,
-					'partner_types'=>$partner_types,
-					'required' => false,
-					'desc' => $this->l('Select the partner(s) this project is related to')
-				),
-                
 				array(
 					'type' => 'select',
 					'label' => $this->l('Project Type:'),
@@ -322,6 +310,15 @@ class AdminProjectsControllerCore extends AdminController
 					'rows' => 10,
 					'class' => 'rte',
 					'hint' => $this->l('Invalid characters:').' <>;=#{}'
+				),
+				array(
+					'type' => 'partner',
+					'label' => $this->l('Related Partners:'),
+					'name' => 'partnerBox',
+					'values' => $partners,
+					'partner_types'=>$partner_types,
+					'required' => false,
+					'desc' => $this->l('Select the partner(s) this project is related to')
 				)
 				
 			)
@@ -372,11 +369,9 @@ class AdminProjectsControllerCore extends AdminController
         
         
         
-        //dodato
-        
         $related_partners = $project->getProjectRelatedPartners();
 		$related_partners_ids = array();
-if (is_array($related_partners))
+		if (is_array($related_partners))
 			foreach ($related_partners as $related_partner)
 				$related_partners_ids[] = $related_partner['id_partner'];
 				
