@@ -144,6 +144,21 @@ class AdminApplicationsControllerCore extends AdminController
 			),
 			'input' => array(
 				array(
+					'type' => 'select',
+					'label' => $this->l('Call:'),
+					'name' => 'id_call',
+					'required' => true,
+					'options' => array(
+						'query' => $calls,
+						'id' => 'id_call',
+						'name' => 'title',
+						'default' => array(
+							'value' => '',
+							'label' => $this->l('-- Choose --')
+						)
+					)
+				),
+				array(
 					'type' => 'text',
 					'label' => $this->l('Name:'),
 					'name' => 'name',
@@ -160,21 +175,6 @@ class AdminApplicationsControllerCore extends AdminController
 					'required' => true,
 					'lang' => true,
 					'hint' => $this->l('Invalid characters:').' <>;=#{}'
-				),
-				array(
-					'type' => 'select',
-					'label' => $this->l('Call:'),
-					'name' => 'id_call',
-					'required' => true,
-					'options' => array(
-						'query' => $calls,
-						'id' => 'id_call',
-						'name' => 'title',
-						'default' => array(
-							'value' => '',
-							'label' => $this->l('-- Choose --')
-						)
-					)
 				),
 				array(
 					'type' => 'date',

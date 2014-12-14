@@ -115,6 +115,9 @@
 			{if isset($call.requirements) && $call.requirements|@count > 0}
 				<li><a href="#tabs-2">Requirements</a></li>
 			{/if}
+			{if isset($call.partners) && $call.partners|@count > 0}
+				<li><a href="#tabs-3">Partners</a></li>
+			{/if}
 		</ul>
 	
 	{if isset($call.description) && $call.description != ""}
@@ -128,22 +131,47 @@
 		</div>	
 	{/if}
 
+	{if isset($call.partners) && $call.partners|@count > 0}
+		<div id="tabs-3">
+			<table id="project-table" class="tablesorter"> 
+				<thead> 
+					<tr> 
+						<th class="partner-list-name">Partner</th> 
+						<th class="partner-list-type">Type</th> 
+					</tr> 
+				</thead> 
+				<tbody> 
+					{foreach from=$call.partners item=partner name=partners}
+					<tr>
+						<td class="partner-list-name">
+							<a href="{$partner.url}" target="_blank">{$partner.name|escape:'htmlall':'UTF-8'}</a>
+						</td>
+						<td class="partner-list-type">
+							{$partner.type|escape:'htmlall':'UTF-8'}
+						</td>
+					</tr>
+					{/foreach}
+				</tbody> 
+			</table>
+		</div>	
+	{/if}
+
 	</div>
 		 
 </div>
 
 <div class = "right-column">
-	{if isset($funding_agencies) && $funding_agencies|@count > 0}
+	{if isset($funding_agency) && $funding_agency|@count > 0}
 	<div style="margin-bottom: 20px">
 		<img class="logo" src="{$base_url}img/headers/funding-agencies.png" />
-		{foreach from=$funding_agencies item=funding_agency}
+		{foreach from=$funding_agency item=fa}
 		<div class="row-logo">
 			<div class="logo">
-				{if $funding_agency.url != ""}
-				<a href="{$funding_agency.url}" target="_blank">
+				{if $fa.url != ""}
+				<a href="{$fa.url}" target="_blank">
 				{/if}
-					<img class="logo" src="../img/funding-agencies/{$funding_agency.id_funding_agency}.jpg" />
-				{if $funding_agency.url != ""}
+					<img class="logo" src="../img/funding-agencies/{$fa.id_funding_agency}.jpg" />
+				{if $fa.url != ""}
 				</a>
 				{/if}
 			</div>	

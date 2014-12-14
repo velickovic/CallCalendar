@@ -32,10 +32,10 @@ class Dispatcher extends DispatcherCore
         
         'call_rule' => array(
 			'controller' =>	'call',
-			'rule' =>		'calls/{id}',
+			'rule' =>		'calls/{id}-{rewrite}',
 			'keywords' => array(
 				'id' =>				array('regexp' => '[0-9]+', 'param' => 'id'),
-				
+				'rewrite' =>		array('regexp' => '[_a-zA-Z0-9-\pL]*'),
 			),
 		),
         

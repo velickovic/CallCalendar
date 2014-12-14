@@ -86,6 +86,21 @@ class FundingAgencyCore extends ObjectModel
 		ORDER BY fa.`id_funding_agency` ASC');
 	}
 
+	public function getFundingAgencyById($id_funding_agency = null, $id_lang = null)
+	{
+		if(!$id_funding_agency)
+			$id_funding_agency=(int)$this->id;
+		if (!$id_lang)
+			$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
+
+		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
+		SELECT DISTINCT fa.*, fal.`name`, fal.`acronym`
+		FROM `'._DB_PREFIX_.'funding_agency` AS fa
+		LEFT JOIN `'._DB_PREFIX_.'funding_agency_lang` AS fal ON (fa.`id_funding_agency` = fal.`id_funding_agency` AND fal.`id_lang` = '.(int)$id_lang.')
+		WHERE fa.`id_funding_agency` = '.$id_funding_agency);
+
+	}
+
 	public static function getTopFundingAgencies($id_lang, $count = 3)
 	{
 		if (!$id_lang)

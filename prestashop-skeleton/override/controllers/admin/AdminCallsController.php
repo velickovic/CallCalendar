@@ -155,13 +155,13 @@ class AdminCallsControllerCore extends AdminController
 					'size' => 100,
 					'required' => true,
 					'lang' => true,
-					'hint' => $this->l('Invalid characters:').' <>;=#{}'
+					'hint' => $this->l('Invalid characters:').' <>;=#{}',
 				),
 				array(
 					'type' => 'text',
 					'label' => $this->l('Acronym:'),
 					'name' => 'acronym',
-					'size' => 100,
+					'size' => 20,
 					'required' => true,
 					'lang' => true,
 					'hint' => $this->l('Invalid characters:').' <>;=#{}'

@@ -24,11 +24,12 @@ class CallControllerCore extends FrontController
 		
         
 		$object = Call::getCallById($id);
-		
+		$funding_agency = FundingAgency::getFundingAgencyById($object['id_funding_agency']);
         
 		$this->context->smarty->assign(array(
 			'id' => Context::getContext()->shop->id,
 			'call' => $object,
+			'funding_agency' => $funding_agency,
 			'base_url' => __PS_BASE_URI__,
 		));
 
