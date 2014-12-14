@@ -154,6 +154,18 @@ class AdminCallsControllerCore extends AdminController
 					'label' => $this->l('Description:'),
 					'name' => 'description',
 					'lang' => true,
+					'autoload_rte' => true,
+					'cols' => 100,
+					'rows' => 10,
+					'class' => 'rte',
+					'required' => true,
+					'hint' => $this->l('Invalid characters:').' <>;=#{}'
+				),
+				array(
+					'type' => 'textarea',
+					'label' => $this->l('Keywords:'),
+					'name' => 'keywords',
+					'lang' => true,
 					'cols' => 100,
 					'rows' => 10,
 					'class' => 'rte',
@@ -165,6 +177,7 @@ class AdminCallsControllerCore extends AdminController
 					'label' => $this->l('Reqirements:'),
 					'name'=>'requirements',
 					'lang' => true,
+					'autoload_rte' => true,
 					'cols' => 100,
 					'rows' => 10,
 					'class' => 'rte',
@@ -269,6 +282,12 @@ class AdminCallsControllerCore extends AdminController
 			$this->fields_value['description_'.$language['id_lang']] = htmlentities(stripslashes($this->getFieldValue(
 				$call,
 				'description',
+				$language['id_lang']
+			)), ENT_COMPAT, 'UTF-8');
+
+			$this->fields_value['keywords_'.$language['id_lang']] = htmlentities(stripslashes($this->getFieldValue(
+				$call,
+				'keywords',
 				$language['id_lang']
 			)), ENT_COMPAT, 'UTF-8');
 

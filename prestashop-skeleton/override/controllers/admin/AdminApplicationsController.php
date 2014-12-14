@@ -37,7 +37,7 @@ class AdminApplicationsControllerCore extends AdminController
 				$this->application_statuses_array[$application_status['name']] = $application_status['name'];
 
 			foreach ($calls as $call)
-				$this->calls_array[$call['title']] = $call['name'];
+				$this->calls_array[$call['title']] = $call['title'];
 			
 			}
 	
@@ -67,7 +67,7 @@ class AdminApplicationsControllerCore extends AdminController
 				'title' => $this->l('Status'),
 				'type'  => 'select',
 				'list' => $this->application_statuses_array,
-				'filter_key' => 'psl!name',
+				'filter_key' => 'asl!name',
 				'width' => 'auto'
 			)
         );
