@@ -183,7 +183,7 @@ class AdminCallAttachmentControllerCore extends AdminController
 				
 				array(
 					'type' => 'date',
-					'label' => $this->l('Date of upoload:'),
+					'label' => $this->l('Date of upload:'),
 					//'label' => getdate(),
 					'name' => 'date_of_upload',
 					'size' => 20,
