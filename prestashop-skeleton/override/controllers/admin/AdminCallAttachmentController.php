@@ -115,7 +115,7 @@ class AdminCallAttachmentControllerCore extends AdminController
 	 	$this->_select = 'al.`name`, cl.`title` AS call_title';
 		$this->_join = 'LEFT JOIN `'._DB_PREFIX_.'call` c ON a.`id_call` = c.`id_call`
 		LEFT JOIN `'._DB_PREFIX_.'call_lang` cl ON (cl.`id_call` = c.`id_call` AND cl.`id_lang` = '.(int)$this->context->language->id.')
-		LEFT JOIN `'._DB_PREFIX_.'attachment_lang` al ON (al.`id_attachment` = a.`id_attachment` AND al.`id_lang` = '.(int)$this->context->language->id.')'; //TO DO add funding agency
+		LEFT JOIN `'._DB_PREFIX_.'attachment_lang` al ON (al.`id_attachment` = a.`id_attachment` AND al.`id_lang` = '.(int)$this->context->language->id.')'; //TODO add funding agency
 		//$this->_orderBy="name";
 	 	return parent::renderList();
 	}
@@ -133,7 +133,7 @@ class AdminCallAttachmentControllerCore extends AdminController
 		
 		$this->fields_form = array(
 			'legend' => array(
-				'title' => $this->l('Deadlines'),
+				'title' => $this->l('deadlines'),
 				'image' => '../img/admin/date.png'
 			),
 			
@@ -183,7 +183,7 @@ class AdminCallAttachmentControllerCore extends AdminController
 				
 				array(
 					'type' => 'date',
-					'label' => $this->l('Date of upload:'),
+					'label' => $this->l('Date of upoload:'),
 					//'label' => getdate(),
 					'name' => 'date_of_upload',
 					'size' => 20,

@@ -119,7 +119,6 @@
 				<li><a href="#tabs-3">Partners</a></li>
 			{/if}
 
-			<!-- //TODO remove this -->
 			{if isset($call) }
 				<li><a href="#tabs-4">Attachments</a></li>
 			{/if}
@@ -162,7 +161,6 @@
 	{/if}
 
 
-	<!-- //TODO remove this -->
 	{if isset($call)}
 		<ul id="tabs-4" calss="bullet">
 			{foreach from=$attachments item=attachment}

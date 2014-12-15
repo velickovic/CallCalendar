@@ -119,7 +119,6 @@ $(document).ready(function()
 		</div>
 		{/if}
 		<br class="clearBoth">
-		
 	{/foreach}
 
 

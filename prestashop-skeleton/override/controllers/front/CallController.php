@@ -26,7 +26,6 @@ class CallControllerCore extends FrontController
 		$object = Call::getCallById($id);
 		$funding_agency = FundingAgency::getFundingAgencyById($object['id_funding_agency']);
 		$attachments = CallAttachment::getAttachments(null, $id, true);
-		var_dump($attachments);
         
 		$this->context->smarty->assign(array(
 			'id' => Context::getContext()->shop->id,
