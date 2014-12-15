@@ -118,6 +118,11 @@
 			{if isset($call.partners) && $call.partners|@count > 0}
 				<li><a href="#tabs-3">Partners</a></li>
 			{/if}
+
+			<!-- //TODO remove this -->
+			<!-- {if isset($call) }
+				<li><a href="#tabs-4">Attachments</a></li>
+			{/if} -->
 		</ul>
 	
 	{if isset($call.description) && $call.description != ""}
@@ -156,6 +161,17 @@
 		</div>	
 	{/if}
 
+	<!-- //TODO remove this -->
+	<!-- {if isset($call)}
+		<div id="tabs-4">
+			{foreach from=$attachments item=attachment}
+				<a href="{$link->getPageLink('attachment', true, NULL, "id_attachment={$attachment.id_attachment}")}">{$attachment.name|escape:'htmlall':'UTF-8'}</a>
+
+			{/foreach}
+
+		</div>	
+	{/if} -->
+
 	</div>
 		 
 </div>
@@ -176,8 +192,25 @@
 				{/if}
 			</div>	
 		</div>
+		<br class="clearBoth">
 		{/foreach}
 	</div>	
 	{/if}
+
+	<div class="row-logo">
+			<div class="logo">
+				
+				<a href="http://www.es.mdh.se/divisions/18-Division_of_Research_Coordination" target="_blank">
+				
+					<img class="logo" src="../img/headers/Reco-call-calendar-web.jpg" />
+					
+					<div style="font-size:11px; padding-top:10px">
+						The RECO Call Calendar is maintained by the Division of Research Coordination
+					</div>	
+
+				</a>
+				
+			</div>	
+	</div>
 </div>
 

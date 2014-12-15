@@ -98,6 +98,8 @@ $(document).ready(function()
 </div>
 
 <div class = "right-column">
+
+	
 	<img class="logo" src="{$base_url}img/headers/funding-agencies.png" />
 	<div style="font-size:11px; padding-top:10px">
 		Our research is funded by a number of different funding agencies. The most common ones are listed below.
@@ -116,6 +118,27 @@ $(document).ready(function()
 			</div>	
 		</div>
 		{/if}
+		<br class="clearBoth">
+		
 	{/foreach}
+
+
+
+	<div class="row-logo">
+			<div class="logo">
+				
+				<a href="http://www.es.mdh.se/divisions/18-Division_of_Research_Coordination" target="_blank">
+				
+					<img class="logo" src="img/headers/Reco-call-calendar-web.jpg" />
+					
+					<div style="font-size:11px; padding-top:10px">
+						The RECO Call Calendar is maintained by the Division of Research Coordination
+					</div>	
+
+				</a>
+				
+			</div>	
+	</div>
+
 </div>
 
