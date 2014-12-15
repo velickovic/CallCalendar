@@ -261,10 +261,14 @@ class CallAttachmentCore extends ObjectModel
 		return false;
 	}
 */
-		public static function getAttachments($id_lang, $id_call, $include = true)
+		public static function getAttachments($id_lang = 0, $id_call, $include = true)
 	{
+
+		if (!$id_lang)
+			$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
+
 		return Db::getInstance()->executeS('
-			SELECT *
+			SELECT a.`id_attachment`, a.`file_name`, a.`file`, a.`mime`, al.`name`, al.`description`
 			FROM '._DB_PREFIX_.'attachment a
 			LEFT JOIN '._DB_PREFIX_.'attachment_lang al ON (a.id_attachment = al.id_attachment AND al.id_lang = '.(int)$id_lang.')
 			WHERE a.id_attachment '.($include ? 'IN' : 'NOT IN').' (

@@ -120,9 +120,9 @@
 			{/if}
 
 			<!-- //TODO remove this -->
-			<!-- {if isset($call) }
+			{if isset($call) }
 				<li><a href="#tabs-4">Attachments</a></li>
-			{/if} -->
+			{/if}
 		</ul>
 	
 	{if isset($call.description) && $call.description != ""}
@@ -161,16 +161,18 @@
 		</div>	
 	{/if}
 
+
 	<!-- //TODO remove this -->
-	<!-- {if isset($call)}
-		<div id="tabs-4">
+	{if isset($call)}
+		<ul id="tabs-4" calss="bullet">
 			{foreach from=$attachments item=attachment}
-				<a href="{$link->getPageLink('attachment', true, NULL, "id_attachment={$attachment.id_attachment}")}">{$attachment.name|escape:'htmlall':'UTF-8'}</a>
+				<li><a href="{$link->getPageLink('attachment', true, NULL, "id_attachment={$attachment.id_attachment}")}">{$attachment.name|escape:'htmlall':'UTF-8'}</a><br />{$attachment.description|escape:'htmlall':'UTF-8'}
+				</li>
 
 			{/foreach}
 
-		</div>	
-	{/if} -->
+		</ul>	
+	{/if}
 
 	</div>
 		 
