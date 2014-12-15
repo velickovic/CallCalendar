@@ -266,8 +266,7 @@ class CallAttachmentCore extends ObjectModel
 		return Db::getInstance()->executeS('
 			SELECT *
 			FROM '._DB_PREFIX_.'attachment a
-			LEFT JOIN '._DB_PREFIX_.'attachment_lang al
-				ON (a.id_attachment = al.id_attachment AND al.id_lang = '.(int)$id_lang.')
+			LEFT JOIN '._DB_PREFIX_.'attachment_lang al ON (a.id_attachment = al.id_attachment AND al.id_lang = '.(int)$id_lang.')
 			WHERE a.id_attachment '.($include ? 'IN' : 'NOT IN').' (
 				SELECT ca.id_attachment
 				FROM '._DB_PREFIX_.'call_attachment ca

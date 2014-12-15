@@ -32,19 +32,19 @@ class AdminCallAttachmentControllerCore extends AdminController
 				$attachments = CallAttachment::getAttachments($this->context->language->id,$call['id_call'],false);
 				//var_dump($attachments);
 				foreach ($attachments as $attachment){
-				var_dump($attachment['name']);
+				// var_dump($attachment['name']);
 				$this->attachments_array [$attachment['name']] = $attachment['name'];
 				}
 				}
-				var_dump ($this->attachments_array);
+				// var_dump ($this->attachments_array);
 				//var_dump ($this->calls_array);
 			}
 	
 		$this->fields_list = array(
-			'id_deadline' => array(
-				'title' => $this->l('ID'),
-				'width' => 25
-			),
+			// 'id_deadline' => array(
+			// 	'title' => $this->l('ID'),
+			// 	'width' => 25
+			// ),
 			/*
 			'name' => array(
 				'title' => $this->l('Name'),
@@ -59,14 +59,20 @@ class AdminCallAttachmentControllerCore extends AdminController
 				'filter_key' => 'al!name',
 				'width' => 'auto'
 			),
-				
 			'call_title' => array(
 				'title' => $this->l('Call'),
 				'type'  => 'select',
 				'list' => $this->calls_array,
 				'filter_key' => 'cl!title',
 				'width' => 'auto'
-			) //TODO add types and / or dates 
+			),
+			'date_of_upload' => array(
+				'title' => $this->l('Date of upload'),
+				'type'  => 'date',
+				'filter_key' => 'ca!date_of_upload',
+				'width' => 'auto'
+			) 
+			//TODO add types and / or dates 
 			
         );
 
@@ -123,7 +129,7 @@ class AdminCallAttachmentControllerCore extends AdminController
 		//var_dump($calls);
 		//$id_call = Tools::GetValue(id_call.
 		$attachments = CallAttachment::getAttachments($this->context->language->id,'id_call',false);
-		//var_dump($attachments);
+		// var_dump(array_shift(array_values($attachments)));
 		
 		$this->fields_form = array(
 			'legend' => array(
@@ -177,12 +183,17 @@ class AdminCallAttachmentControllerCore extends AdminController
 				
 				array(
 					'type' => 'date',
-					//'label' => $this->l('Select deadline date:'),
+					'label' => $this->l('Date of upoload:'),
 					//'label' => getdate(),
 					'name' => 'date_of_upload',
 					'size' => 20,
 					'required' => true
-				)	
+				),
+				// array(
+				// 	'type' => 'file',
+				// 	'label' => $this->l('File:'),
+				// 	'name' => 'file_name',
+				// )	
 				/*
 				array(
 					'type' => 'radio',
@@ -223,6 +234,8 @@ class AdminCallAttachmentControllerCore extends AdminController
 		// 		$language['id_lang']
 		// 	)), ENT_COMPAT, 'UTF-8');
 		// }
+
+		$this->fields_value['date_of_upload'] = date("Y-m-d");
 		
 		$this->fields_form['submit'] = array(
 			'title' => $this->l('   Save   '),
