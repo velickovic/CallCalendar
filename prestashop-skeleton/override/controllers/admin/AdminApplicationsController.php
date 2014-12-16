@@ -312,6 +312,18 @@ class AdminApplicationsControllerCore extends AdminController
 
 		// Added values of object 
 
+		/*if($this->$id_application_status == 2){
+			$insertData = array(
+         	'id_call'  => '12', 
+         	'name'  => 'Test app to project', 
+         	'acronym'   => 'TATP', 
+         	'id_project_type'  => '1',
+         	'id_project_status' => '2'
+      );
+
+ 			Db::getInstance()->insert("project", $insertData);
+		}*/
+
 		$this->fields_form['submit'] = array(
 			'title' => $this->l('   Save   '),
 			'class' => 'button'
