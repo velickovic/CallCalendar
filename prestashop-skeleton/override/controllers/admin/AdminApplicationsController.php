@@ -72,6 +72,10 @@ class AdminApplicationsControllerCore extends AdminController
 			)
         );
 
+        if ($_GET['action']=='createProject'){
+	 		$this->createProject();
+		}
+
 		parent::__construct();
 	}
 
@@ -105,6 +109,17 @@ class AdminApplicationsControllerCore extends AdminController
 
 		parent::initProcess();
 	}
+
+	// public function initContent() 
+	// {
+	    
+	//     parent::initContent();
+
+	//     // you can place your favcount method inside the class and use it
+	//     // $createProject = $this->createProject();//$this->id_object
+	//     // then assign the variable to the template
+	//     // $this->context->smarty->assign('createProject', $createProject);
+	// }
 	
 	public function renderList()
 	{
@@ -289,6 +304,17 @@ class AdminApplicationsControllerCore extends AdminController
 					'rows' => 10,
 					'class' => 'rte',
 					'hint' => $this->l('Invalid characters:').' <>;=#{}'
+				),
+				array(
+					'type' => 'create_project',
+					'label' => $this->l('Create Project'),
+					// 'name' => 'overview',
+					// 'lang' => true,
+					// 'autoload_rte' => true,
+					// 'cols' => 100,
+					// 'rows' => 10,
+					// 'class' => 'rte',
+					// 'hint' => $this->l('Invalid characters:').' <>;=#{}'
 				)
 				
 			)
@@ -312,13 +338,22 @@ class AdminApplicationsControllerCore extends AdminController
 
 		// Added values of object 
 
-		$this->fields_form['submit'] = array(
-			'title' => $this->l('   Save   '),
-			'class' => 'button'
-		);
+		// $this->fields_form['submit'] = array(
+		// 	'title' => $this->l('   Save   '),
+		// 	'class' => 'button'
+		// );
 
 				
 		return parent::renderForm();
+	}
+
+
+	public function createProject() 
+	{
+
+		//TODO do some checks or whatever
+		Application::createProject(Tools::getValue('id_application'));
+
 	}
 	
 	
