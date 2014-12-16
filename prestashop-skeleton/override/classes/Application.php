@@ -182,7 +182,7 @@ class ApplicationCore extends ObjectModel
 			$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
 		
 		$sql = '
-		SELECT a.*, al.`name`, al.`acronym`, al.`keywords`, al.`overview`, ptl.`name` AS type, asl.`name` AS status, cl.`title` AS call
+		SELECT a.*, al.`name`, al.`acronym`, al.`keywords`, al.`overview`, ptl.`name` AS type, apsl.`name` AS status, cl.`title` AS call_name
 		FROM `'._DB_PREFIX_.'application` a
 		LEFT JOIN `'._DB_PREFIX_.'application_lang` AS al ON (a.`id_application` = al.`id_application` AND al.`id_lang` = '.(int)$id_lang.')
 		LEFT JOIN `'._DB_PREFIX_.'project_type` pt ON a.`id_project_type` = pt.`id_project_type`
@@ -283,7 +283,7 @@ class ApplicationCore extends ObjectModel
 	// 	return FundingAgency::getProjectFundingAgencies((int)$this->id,null);
 	// }
 	
-	public function getApplicatonRelatedPartners($id_application = null, $id_lang = null)
+	public function getApplicationRelatedPartners($id_application = null, $id_lang = null)
 	{
 			if(!$id_application)
 				$id_application=(int)$this->id;
@@ -291,7 +291,7 @@ class ApplicationCore extends ObjectModel
 				$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
 	
 			return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
-			SELECT pp.`id_partner`, pl.`name`, pl.`acronym`, pl.`city`,  cl.`name` AS country, ptl.`name` AS type, p.url
+			SELECT ap.`id_partner`, pl.`name`, pl.`acronym`, pl.`city`,  cl.`name` AS country, ptl.`name` AS type, p.url
 			FROM `'._DB_PREFIX_.'application_partner` as ap
 			LEFT JOIN `'._DB_PREFIX_.'partner` p on ap.`id_partner` = p.`id_partner`
 			LEFT JOIN `'._DB_PREFIX_.'partner_lang` AS pl ON (ap.`id_partner` = pl.`id_partner` AND pl.`id_lang` = '.(int)$id_lang.')
@@ -580,6 +580,61 @@ class ApplicationCore extends ObjectModel
 			}
 		}
 		}
+	}
+
+	public static function createProject($id_application) 
+	{
+
+		// $application = Application::getApplicationById($id_application);
+		// var_dump($application);
+		// $project = new Project();
+		// var_dump($project);
+	
+		// $project->id_project_status = $application->id_application_status;
+
+		// $project->id_project_type = $application->id_project_type;
+
+	 // 	$project->name = $application->name;
+
+	 // 	$project->totalBudget = ((int)$application->money_requested + (int)$application->mdhPartBudget);
+		
+	 // 	$project->mdhPartBudget = $application->mdhPartBudget;
+		
+		// $project->acronym = $application->acronym;
+
+		// $project->keywords = $application->keywords;
+		
+		// $project->overview = $application->overview;
+		
+		// // $project->results = $application->results;
+		
+		// // $project->future_work = $application->futu;
+
+		// // $project->url = $application->;
+		
+		// // $project->registry_number = $application->;
+
+		// /** @var string Object creation date */
+		// $project->date_start = $application->date_start;
+
+		// /** @var string Object last modification date */
+		// $project->date_end = $application->date_end;
+
+		// 	/** @var string Friendly URL */
+		// // $project->link_rewrite = $application->;
+		
+		// // $project->fundingAgencyBox;//TODO fix this
+		// $project->partnerBox  = $application->partnerBox;
+		
+		// $project->inputLeaders = $application->inputLeaders;
+		// $project->inputMembers = $application->inputMembers;
+		// $project->inputAssociated = $application->inputAssociated;
+
+		// $project->add();
+		// $test = 'asdf';
+		// file_put_contents("newfile.txt", 'yolo', FILE_APPEND);
+		// return $test;
+
 	}
 	
 	
