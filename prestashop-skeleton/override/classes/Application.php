@@ -301,6 +301,12 @@ class ApplicationCore extends ObjectModel
 			ORDER BY ptl.`name` ASC, pl.`name` ASC');
 	}
 	
+
+	// public static function getApplicationRelatedPartnersStatic($id_application , $id_lang = null)
+	// {
+
+	// }
+	
 	//TODO maybe implement later if needed
 	// public static function getPartnerRelatedProjects($partner_id,$id_lang = 0)
 	// {
@@ -582,58 +588,73 @@ class ApplicationCore extends ObjectModel
 		}
 	}
 
+	public static function getFundingAgencyIdStatic($id_application) 
+	{
+		$sql = '
+		SELECT c.`id_funding_agency`
+		FROM `'._DB_PREFIX_.'application` a 
+		LEFT JOIN `'._DB_PREFIX_.'call` c ON a.`id_call` = c.`id_call`
+		WHERE a.`id_application` = '.$id_application.';'
+
+		;
+
+		return DB::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);//FIXME work only with applications with single funding agency
+
+	}
+
+	public static function updateApplicationStatusToGrantedStatic($id_application) 
+	{
+		Db::getInstance()->update('application', array(
+				'id_application_status' => 1
+			), 'id_application = '.(int)$id_application);// id application statu 1 is Granted
+	}
+
+
 	public static function createProject($id_application) 
 	{
 
-		// $application = Application::getApplicationById($id_application);
-		// var_dump($application);
-		// $project = new Project();
-		// var_dump($project);
-	
-		// $project->id_project_status = $application->id_application_status;
-
-		// $project->id_project_type = $application->id_project_type;
-
-	 // 	$project->name = $application->name;
-
-	 // 	$project->totalBudget = ((int)$application->money_requested + (int)$application->mdhPartBudget);
+		$application = Application::getApplicationById($id_application);
 		
-	 // 	$project->mdhPartBudget = $application->mdhPartBudget;
+		$project = new Project;
 		
-		// $project->acronym = $application->acronym;
+		$project->id_project_status = 2;//project status id 2 has value active
 
-		// $project->keywords = $application->keywords;
-		
-		// $project->overview = $application->overview;
-		
-		// // $project->results = $application->results;
-		
-		// // $project->future_work = $application->futu;
+		$project->id_project_type = $application['id_project_type'];
 
-		// // $project->url = $application->;
+	 	$project->name = array((int)Configuration::get('PS_LANG_DEFAULT') => $application['name']);
+
+	 	$project->totalBudget = ((int)$application['money_requested'] + (int)$application['mdhPartBudget']);
 		
-		// // $project->registry_number = $application->;
-
-		// /** @var string Object creation date */
-		// $project->date_start = $application->date_start;
-
-		// /** @var string Object last modification date */
-		// $project->date_end = $application->date_end;
-
-		// 	/** @var string Friendly URL */
-		// // $project->link_rewrite = $application->;
+	 	$project->mdhPartBudget = $application['mdhPartBudget'];
 		
-		// // $project->fundingAgencyBox;//TODO fix this
-		// $project->partnerBox  = $application->partnerBox;
-		
-		// $project->inputLeaders = $application->inputLeaders;
-		// $project->inputMembers = $application->inputMembers;
-		// $project->inputAssociated = $application->inputAssociated;
+		$project->acronym = array((int)Configuration::get('PS_LANG_DEFAULT') => $application['acronym']);
 
-		// $project->add();
-		// $test = 'asdf';
-		// file_put_contents("newfile.txt", 'yolo', FILE_APPEND);
-		// return $test;
+		$project->keywords = array((int)Configuration::get('PS_LANG_DEFAULT') => $application['keywords']);
+		
+		$project->overview = array((int)Configuration::get('PS_LANG_DEFAULT') => $application['overview']);
+
+		$project->url = $application['url'];
+		
+
+		/** @var string Object creation date */
+		$project->date_start = $application['date_start'];
+
+		/** @var string Object last modification date */
+		$project->date_end = $application['date_end'];
+
+		
+		if(!$project->save()) {
+			$project->add();	
+		}
+
+		$project->addStaff(Application::getLeadersStatic($id_application), Application::getMembersStatic($id_application), Application::getAssociatedStatic($id_application));
+		
+		$project->addProjectFundingAgencies(Application::getFundingAgencyIdStatic($id_application));
+
+
+		Application::updateApplicationStatusToGrantedStatic($id_application);
+
+
 
 	}
 	
