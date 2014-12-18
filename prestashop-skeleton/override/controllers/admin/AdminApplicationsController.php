@@ -338,10 +338,12 @@ class AdminApplicationsControllerCore extends AdminController
 
 		// Added values of object 
 
-		// $this->fields_form['submit'] = array(
-		// 	'title' => $this->l('   Save   '),
-		// 	'class' => 'button'
-		// );
+
+		$this->fields_form['submit'] = array(
+			'title' => $this->l('   Save   '),
+			'class' => 'button'
+		);
+
 
 				
 		return parent::renderForm();
