@@ -353,7 +353,7 @@ class AdminApplicationsControllerCore extends AdminController
 	public function createProject() 
 	{
 
-		//TODO do some checks or whatever
+		//TODO maybe do some checks or whatever
 		Application::createProject(Tools::getValue('id_application'));
 
 	}

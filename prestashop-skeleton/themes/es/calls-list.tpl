@@ -78,15 +78,13 @@ $(document).ready(function()
 			{foreach from=$calls item=call name=call}
 			<tr>
 				<td class="projects-list-title">
-					<a href="calls/{$call.id_call}-{if $call.acronym!=''}{$call.acronym|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}
-					{else}{$call.name|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}{/if}">
+					<a href="calls/{$call.id_call}-{$call.title|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}">
 					
 						{$call.title|escape:'htmlall':'UTF-8'}
 					</a>
 				</td>
 				<td class="projects-list-status">
-					<a href="calls/{$call.id_call}-{if $call.acronym!=''}{$call.acronym|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}
-					{else}{$call.name|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}{/if}">
+					<a href="calls/{$call.id_call}-{$call.title|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}">
 						{$call.status|escape:'htmlall':'UTF-8'}
 					</a>
 				</td>
@@ -98,6 +96,26 @@ $(document).ready(function()
 </div>
 
 <div class = "right-column">
+
+	<div class="row-logo">
+			<div class="logo">
+				
+				<a href="http://www.es.mdh.se/divisions/18-Division_of_Research_Coordination" target="_blank">
+				
+					<img class="logo" src="img/headers/Reco-call-calendar-web.jpg" />
+					
+					<div style="font-size:11px; padding-top:10px">
+						The RECO Call Calendar is maintained by the Division of Research Coordination
+					</div>	
+
+				</a>
+				
+			</div>	
+	</div>
+
+	<br class="clearBoth">
+	<br class="clearBoth">
+	<br class="clearBoth">
 
 	
 	<img class="logo" src="{$base_url}img/headers/funding-agencies.png" />
@@ -122,22 +140,6 @@ $(document).ready(function()
 	{/foreach}
 
 
-
-	<div class="row-logo">
-			<div class="logo">
-				
-				<a href="http://www.es.mdh.se/divisions/18-Division_of_Research_Coordination" target="_blank">
-				
-					<img class="logo" src="img/headers/Reco-call-calendar-web.jpg" />
-					
-					<div style="font-size:11px; padding-top:10px">
-						The RECO Call Calendar is maintained by the Division of Research Coordination
-					</div>	
-
-				</a>
-				
-			</div>	
-	</div>
 
 </div>
 

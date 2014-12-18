@@ -529,7 +529,6 @@ class ApplicationCore extends ObjectModel
 	/**
 	 * Update associated
 	 */
-	//TODO usage line 376
 	public function updateStaff($inputLeaders, $inputMembers, $inputAssociated)
 	{
 		$leaders[] =null;$members[] = null;$associated[] =null;
@@ -598,7 +597,7 @@ class ApplicationCore extends ObjectModel
 
 		;
 
-		return DB::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);//FIXME work only with applications with single funding agency
+		return DB::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);//FIXME work only with applications with single funding agency which is ok for now
 
 	}
 

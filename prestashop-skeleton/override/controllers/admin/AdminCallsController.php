@@ -52,11 +52,6 @@ class AdminCallsControllerCore extends AdminController
 				'width' => 'auto',
 				'filter_key' => 'b!title'
 			),	
-			'acronym' => array(
-				'title' => $this->l('Acronym'),
-				'width' => 'auto',
-				'filter_key' => 'b!acronym'
-			),	
 			'call_type' => array(
 				'title' => $this->l('Type'),
 				'type'  => 'select',
@@ -117,7 +112,7 @@ class AdminCallsControllerCore extends AdminController
 	
 	public function renderList()
 	{
-	 	$this->_select = 'b.title as call_title, b.acronym as call_acronym, ctl.`name` AS call_type, csl.`name` AS call_status, fal.`name` AS funding_agency';
+	 	$this->_select = 'b.title as call_title, ctl.`name` AS call_type, csl.`name` AS call_status, fal.`name` AS funding_agency';
 		$this->_join = 'LEFT JOIN `'._DB_PREFIX_.'call_type` ct ON a.`id_call_type` = ct.`id_call_type`
 		LEFT JOIN `'._DB_PREFIX_.'call_type_lang` ctl ON (ctl.`id_call_type` = ct.`id_call_type` AND ctl.`id_lang` = '.(int)$this->context->language->id.')
 		LEFT JOIN `'._DB_PREFIX_.'call_status` cs ON a.`id_call_status` = cs.`id_call_status`
@@ -156,15 +151,6 @@ class AdminCallsControllerCore extends AdminController
 					'required' => true,
 					'lang' => true,
 					'hint' => $this->l('Invalid characters:').' <>;=#{}',
-				),
-				array(
-					'type' => 'text',
-					'label' => $this->l('Acronym:'),
-					'name' => 'acronym',
-					'size' => 20,
-					'required' => true,
-					'lang' => true,
-					'hint' => $this->l('Invalid characters:').' <>;=#{}'
 				),
 				array(
 					'type' => 'textarea',

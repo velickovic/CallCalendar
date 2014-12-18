@@ -119,7 +119,7 @@
 				<li><a href="#tabs-3">Partners</a></li>
 			{/if}
 
-			{if isset($call) }
+			{if isset($attachments) }
 				<li><a href="#tabs-4">Attachments</a></li>
 			{/if}
 		</ul>
@@ -161,7 +161,7 @@
 	{/if}
 
 
-	{if isset($call)}
+	{if isset($attachments)}
 		<ul id="tabs-4" calss="bullet">
 			{foreach from=$attachments item=attachment}
 				<li><a href="{$link->getPageLink('attachment', true, NULL, "id_attachment={$attachment.id_attachment}")}">{$attachment.name|escape:'htmlall':'UTF-8'}</a><br />{$attachment.description|escape:'htmlall':'UTF-8'}
@@ -175,6 +175,8 @@
 	</div>
 		 
 </div>
+
+<!-- TODO add contact person here -->
 
 <div class = "right-column">
 	{if isset($funding_agency) && $funding_agency|@count > 0}
@@ -197,20 +199,6 @@
 	</div>	
 	{/if}
 
-	<div class="row-logo">
-			<div class="logo">
-				
-				<a href="http://www.es.mdh.se/divisions/18-Division_of_Research_Coordination" target="_blank">
-				
-					<img class="logo" src="../img/headers/Reco-call-calendar-web.jpg" />
-					
-					<div style="font-size:11px; padding-top:10px">
-						The RECO Call Calendar is maintained by the Division of Research Coordination
-					</div>	
-
-				</a>
-				
-			</div>	
-	</div>
+	
 </div>
 
