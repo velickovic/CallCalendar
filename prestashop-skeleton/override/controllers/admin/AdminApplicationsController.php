@@ -150,6 +150,9 @@ class AdminApplicationsControllerCore extends AdminController
 		$members = $application->getMembers();
 	
 		$associated = $application->getAssociated();
+
+		$partners = Partner::getPartners($this->context->language->id);
+		$partner_types=PartnerType::getPartnerTypes($this->context->language->id);
 		
 		
 		$this->fields_form = array(
@@ -306,6 +309,15 @@ class AdminApplicationsControllerCore extends AdminController
 					'hint' => $this->l('Invalid characters:').' <>;=#{}'
 				),
 				array(
+					'type' => 'partner',
+					'label' => $this->l('Related Partners:'),
+					'name' => 'partnerBox',
+					'values' => $partners,
+					'partner_types'=>$partner_types,
+					'required' => false,
+					'desc' => $this->l('Select the partner(s) this project is related to')
+				),
+				array(
 					'type' => 'create_project',
 					'label' => $this->l('Create Project'),
 					// 'name' => 'overview',
@@ -336,7 +348,16 @@ class AdminApplicationsControllerCore extends AdminController
 			
 		}
 
-		// Added values of object 
+		$related_partners = $application->getApplicationRelatedPartners();
+		$related_partners_ids = array();
+		if (is_array($related_partners))
+			foreach ($related_partners as $related_partner)
+				$related_partners_ids[] = $related_partner['id_partner'];
+				
+		if (is_array($partners))
+		foreach ($partners as $partner)
+			$this->fields_value['partnerBox_'.$partner['id_partner']] = 
+				Tools::getValue('partnerBox_'.$partner['id_partner'], in_array($partner['id_partner'], $related_partners_ids));
 
 
 		$this->fields_form['submit'] = array(

@@ -292,7 +292,7 @@ class ApplicationCore extends ObjectModel
 	
 			return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
 			SELECT ap.`id_partner`, pl.`name`, pl.`acronym`, pl.`city`,  cl.`name` AS country, ptl.`name` AS type, p.url
-			FROM `'._DB_PREFIX_.'application_partner` as ap
+			FROM `'._DB_PREFIX_.'application_partner` AS ap
 			LEFT JOIN `'._DB_PREFIX_.'partner` p on ap.`id_partner` = p.`id_partner`
 			LEFT JOIN `'._DB_PREFIX_.'partner_lang` AS pl ON (ap.`id_partner` = pl.`id_partner` AND pl.`id_lang` = '.(int)$id_lang.')
 			LEFT JOIN `'._DB_PREFIX_.'partner_type_lang` AS ptl ON (p.`id_partner_type` = ptl.`id_partner_type` AND  ptl.`id_lang` = '.(int)$id_lang.')
@@ -601,11 +601,25 @@ class ApplicationCore extends ObjectModel
 
 	}
 
+	public static function getPartnersIdStatic($id_application) 
+	{
+		$sql = '
+		SELECT ap.`id_partner`
+		FROM `'._DB_PREFIX_.'application` a 
+		LEFT JOIN `'._DB_PREFIX_.'application_partner` ap ON a.`id_application` = ap.`id_application`
+		WHERE a.`id_application` = '.$id_application.';'
+
+		;
+
+		return DB::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
+
+	}
+
 	public static function updateApplicationStatusToGrantedStatic($id_application) 
 	{
 		Db::getInstance()->update('application', array(
 				'id_application_status' => 1
-			), 'id_application = '.(int)$id_application);// id application statu 1 is Granted
+			), 'id_application = '.(int)$id_application);// id application status 1 has value 'Granted'
 	}
 
 
@@ -616,7 +630,7 @@ class ApplicationCore extends ObjectModel
 		
 		$project = new Project;
 		
-		$project->id_project_status = 2;//project status id 2 has value active
+		$project->id_project_status = 2;//project status id 2 has value 'active'
 
 		$project->id_project_type = $application['id_project_type'];
 
@@ -646,9 +660,14 @@ class ApplicationCore extends ObjectModel
 			$project->add();	
 		}
 
-		$project->addStaff(Application::getLeadersStatic($id_application), Application::getMembersStatic($id_application), Application::getAssociatedStatic($id_application));
+		$project->addStaffModified(Application::getLeadersStatic($id_application), Application::getMembersStatic($id_application), Application::getAssociatedStatic($id_application));
 		
 		$project->addProjectFundingAgencies(Application::getFundingAgencyIdStatic($id_application));
+
+		// var_dump(Application::getPartnersIdStatic($id_application));
+		// var_dump(Project::getLeadersStatic(336));
+
+		$project->addProjectPartnersModified(Application::getPartnersIdStatic($id_application));
 
 
 		Application::updateApplicationStatusToGrantedStatic($id_application);
