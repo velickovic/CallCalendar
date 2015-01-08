@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2014-11-26 16:30:38
+<?php /* Smarty version Smarty-3.1.13, created on 2015-01-02 13:51:49
          compiled from "C:\xampp\htdocs\callCalendar\prestashop-skeleton\modules\editorial\editorial.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:36295475f21ed4bf58-21212824%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '9362fb5d9699507db33f93f5bd018c0dae82a12c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\callCalendar\\prestashop-skeleton\\modules\\editorial\\editorial.tpl',
-      1 => 1414174923,
+      1 => 1418388775,
       2 => 'file',
     ),
   ),
@@ -15,6 +15,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_5475f21edd0c77_96558809',
   'variables' => 
   array (
     'profile_name' => 0,
@@ -26,8 +28,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'number_of_active_research_projects' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_5475f21edd0c77_96558809',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5475f21edd0c77_96558809')) {function content_5475f21edd0c77_96558809($_smarty_tpl) {?><!-- source: modules/editorial/editorial.tpl -->
 

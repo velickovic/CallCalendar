@@ -269,12 +269,12 @@ class AdminPartnersControllerCore extends AdminController
 			'status' => array('title' => $this->l('Status'),'type'  => 'select','list' => $this->project_statuses_array,'filter_key' => 'psl!name','width' => 'auto'),		
 			'date_start' => array('title' => $this->l('Creation date'),'width' => 150,'type' => 'date','align' => 'right'),
 			'date_end' => array('title' => $this->l('Update date'),'width' => 150,'type' => 'date','align' => 'right'),
-			// 'registry_number' => array('title' => $this->l('Registry Number'),'width' => 'auto'),		
-			// 'keywords' => array('title' => $this->l('Keywords'),'width' => 'auto'),
+			'registry_number' => array('title' => $this->l('Registry Number'),'width' => 'auto'),		
+			'keywords' => array('title' => $this->l('Keywords'),'width' => 'auto'),
 			'partners' => array('title' => $this->l('Partners'),'width' => 'auto'),
-			// 'overview' => array('title' => $this->l('Overview'),'width' => 'auto'),
-			// 'results' => array('title' => $this->l('Results'),'width' => 'auto'),
-			// 'future_work' => array('title' => $this->l('Future Work'),'width' => 'auto')
+			'overview' => array('title' => $this->l('Overview'),'width' => 'auto'),
+			'results' => array('title' => $this->l('Results'),'width' => 'auto'),
+			'future_work' => array('title' => $this->l('Future Work'),'width' => 'auto')
 			));
 
 		$project_list =  Project::getPartnerRelatedProjects($partner->id);
