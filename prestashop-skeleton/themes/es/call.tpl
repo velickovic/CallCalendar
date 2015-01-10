@@ -134,35 +134,8 @@
 			{$call.requirements}
 		</div>	
 	{/if}
-
-	{if isset($call.partners) && $call.partners|@count > 0}
-		<div id="tabs-3">
-			<table id="project-table" class="tablesorter"> 
-				<thead> 
-					<tr> 
-						<th class="partner-list-name">Partner</th> 
-						<th class="partner-list-type">Type</th> 
-					</tr> 
-				</thead> 
-				<tbody> 
-					{foreach from=$call.partners item=partner name=partners}
-					<tr>
-						<td class="partner-list-name">
-							<a href="{$partner.url}" target="_blank">{$partner.name|escape:'htmlall':'UTF-8'}</a>
-						</td>
-						<td class="partner-list-type">
-							{$partner.type|escape:'htmlall':'UTF-8'}
-						</td>
-					</tr>
-					{/foreach}
-				</tbody> 
-			</table>
-		</div>	
-	{/if}
-
-
 	{if isset($attachments)}
-		<ul id="tabs-4" calss="bullet">
+		<ul id="tabs-3" calss="bullet">
 			{foreach from=$attachments item=attachment}
 				<li><a href="{$link->getPageLink('attachment', true, NULL, "id_attachment={$attachment.id_attachment}")}">{$attachment.name|escape:'htmlall':'UTF-8'}</a><br />{$attachment.description|escape:'htmlall':'UTF-8'}
 				</li>
@@ -179,6 +152,48 @@
 <!-- TODO add contact person here -->
 
 <div class = "right-column">
+	{if count($leaders) > 1}
+	<div style="margin-bottom: 20px">
+		<img class="logo" src="{$base_url}img/headers/call-contacts.png"/>
+		{foreach from=$leaders item=leader}
+		<div class="row">
+			<div style="float:left">
+				<img src="../img/staff/{$leader.id_customer}-staff.jpg" style="width:72px;"/>
+			</div>	
+			<div style="float:left;width:120px;margin-left:10px">
+				<br>
+				<h3>
+					<a href="{$base_url}staff/{$leader.id_customer}-{$leader.firstname|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}_{$leader.lastname|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}">
+						{$leader.firstname} {$leader.lastname}, {$leader.title}
+					</a>			
+				</h3>
+				Room: {$leader.room}
+				<br>Phone: {$leader.phone}
+			</div>	
+		</div>
+		<br class="clearBoth">
+		{/foreach}
+	</div>
+	{else isset($leaders[0])}
+	<div style="margin-bottom: 20px">
+		<div style="margin-left:100px; margin-bottom: -45px; position:relative; z-index:2;">
+			<img src="../img/staff/{$leaders[0].id_customer}-staff.jpg" style="width:105px;"/>
+		</div>
+		<div style="position:relative;float:left;z-index:1;">
+			<img class="logo" src="{$base_url}img/headers/call-contact.png"/>
+			<h3>
+				<a href="{$base_url}staff/{$leaders[0].id_customer}-{$leaders[0].firstname|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}_{$leaders[0].lastname|replace:"ö":"o"|replace:"Ö":"O"|replace:"ü":"u"|replace:"Ü":"U"|replace:"ä":"a"|replace:"Ä":"A"|replace:"å":"a"|replace:"Å":"A"|replace:"é":"e"|replace:"É":"E"|replace:"á":"a"|replace:"Á":"A"|regex_replace:"/[^A-Za-z0-9]/":"_"}">
+					{$leaders[0].firstname} {$leaders[0].lastname}, {$leaders[0].title}
+				</a>			
+				</h3>
+			Email: {$leaders[0].email}
+			<br>Room: {$leaders[0].room}
+			<br>Phone: {$leaders[0].phone}
+		</div>
+		<br class="clearBoth">
+	</div>
+	{/if}
+	
 	{if isset($funding_agency) && $funding_agency|@count > 0}
 	<div style="margin-bottom: 20px">
 		<img class="logo" src="{$base_url}img/headers/funding-agencies.png" />

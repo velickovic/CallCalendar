@@ -30,6 +30,7 @@ class CallControllerCore extends FrontController
 		$this->context->smarty->assign(array(
 			'id' => Context::getContext()->shop->id,
 			'call' => $object,
+			'leaders' => Call::getCallsContacts($id, $this->context->language->id),
 			'funding_agency' => $funding_agency,
 			'attachments' => $attachments,
 			'base_url' => __PS_BASE_URI__,
