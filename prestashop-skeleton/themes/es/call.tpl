@@ -173,7 +173,7 @@
 		<br class="clearBoth">
 		{/foreach}
 	</div>
-	{else isset($leaders[0])}
+	{elseif isset($leaders[0])}
 	<div style="margin-bottom: 20px">
 		<div style="margin-left:100px; margin-bottom: -45px; position:relative; z-index:2;">
 			<img src="../img/staff/{$leaders[0].id_customer}-staff.jpg" style="width:105px;"/>
