@@ -88,7 +88,9 @@ class AdminCallsControllerCore extends AdminController
         if ($this->display == 'edit' || $this->display == 'add' || $this->display == 'list')
 		{
 			$this->addjQueryPlugin(array('autocomplete'));
-            $this->addJS(array(_PS_JS_DIR_.'admin-calls.js')); //this is causing problems; probably should delete it 
+
+			$this->addJS(array(_PS_JS_DIR_.'admin-calls.js'));
+
 		}
 	}
 
@@ -137,6 +139,7 @@ class AdminCallsControllerCore extends AdminController
 
 		$contacts = $call->getContacts();
 		
+
 		$this->fields_form = array(
 			'legend' => array(
 				'title' => $this->l('Calls'),
@@ -319,7 +322,7 @@ class AdminCallsControllerCore extends AdminController
 				
 		return parent::renderForm();
 	}
-	
+
 
 }
 

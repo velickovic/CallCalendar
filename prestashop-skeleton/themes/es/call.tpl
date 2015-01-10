@@ -131,8 +131,6 @@
 		</div>	
 	{/if}
 
-
-
 	{if isset($attachments)}
 		<ul id="tabs-3" calss="bullet">
 			{foreach from=$attachments item=attachment}
@@ -152,7 +150,8 @@
 
 <div class = "right-column">
 
-{if count($leaders) > 1}
+	{if count($leaders) > 1}
+
 	<div style="margin-bottom: 20px">
 		<img class="logo" src="{$base_url}img/headers/call-contacts.png"/>
 		{foreach from=$leaders item=leader}
@@ -193,9 +192,6 @@
 		<br class="clearBoth">
 	</div>
 	{/if}
-
-
-
 
 	{if isset($funding_agency) && $funding_agency|@count > 0}
 	<div style="margin-bottom: 20px">

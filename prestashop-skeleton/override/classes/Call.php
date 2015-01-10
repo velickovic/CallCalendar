@@ -57,6 +57,7 @@ class CallCore extends ObjectModel
 
 	public $inputLeaders; //this is filed for call's contacts
 
+
 	/**
 	 * @see ObjectModel::$definition
 	 */
@@ -118,9 +119,16 @@ class CallCore extends ObjectModel
 		{
 			$sql .= ' AND cc.`id_customer` = "'. (int)$id_contact . '"';
 		}
+
 		if ($id_funding_agency)
 		{
 			$sql .= ' AND c.`id_funding_agency` = ' . (int)$id_funding_agency;
+		}
+		
+		if ($id_contact)
+
+		{
+			$sql .= ' AND cc.`id_customer` = "'. (int)$id_contact . '"';
 		}
 		$sql .= ' ORDER BY cl.`title` ASC';//psl.`name` ASC, 
 		//echo $sql . '<br>'; 
@@ -176,6 +184,7 @@ class CallCore extends ObjectModel
 	}
 
 
+
 	public static function getCallRelatedMembersById($id_call)
 	{
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
@@ -187,35 +196,42 @@ class CallCore extends ObjectModel
 	}
 
 
+
+
+
+
 	public function add($autodate = true, $null_values = true)
+
 	{
 		$success = parent::add($autodate, $null_values);
-		
 		$this->updateStaff($this->inputLeaders);
-		
 		return $success;
 	}
 
+
 	public function update($nullValues = false)
+
 	{
 		if (Context::getContext()->controller->controller_type == 'admin')
+
 		{
 			$this->updateStaff($this->inputLeaders);
 			var_dump($this->inputLeaders);
-	
-			
+
 		}
 		return parent::update(true);
+
 	}
+
 	public function delete()
+
 	{
 		if (parent::delete())
 		{
-			
 			Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'call_contact` WHERE `id_call` = '.(int)$this->id);
-
 			return true;
 		}
+
 		return false;
 	}
 
@@ -246,6 +262,7 @@ class CallCore extends ObjectModel
 		$this->cleanStaff();
 		$this->addStaff($contacts);
 
+		return false;
 
 	}
 
@@ -253,6 +270,7 @@ class CallCore extends ObjectModel
 	{		
 		Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'call_contact` WHERE `id_call` = '.(int)$this->id);
 	}
+
 
 	public function addStaff($contacts)
 	{
