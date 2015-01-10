@@ -140,10 +140,9 @@ class AdminNewsControllerCore extends AdminController
 					)
 				),
 				array(
-					//'type' => 'hidden',
-					'type' => 'text',
+					'type' => 'hidden', 
 					'name' => 'id_news_and_events_type',
-					'value' =>''
+					'value' =>'1' // id for News in new_and_events_type table
 					),
 				array(
 					'type' => 'text',

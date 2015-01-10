@@ -672,6 +672,26 @@ class ApplicationCore extends ObjectModel
 
 		Application::updateApplicationStatusToGrantedStatic($id_application);
 
+		//create news
+		$news = new NewsAndEvents;
+
+		$news->title = array((int)Configuration::get('PS_LANG_DEFAULT') => $application['name']); //TODO probably change to some better title
+
+		$news->id_news_and_events_type = 1; // id for news in news_and_events_type table
+
+		$news->id_news_and_events_scope = 1; //od for public in news_and_events_scope table
+
+		$news->content = 'automatically generated';
+
+		$news->id_contact = 0; //TODO maybe change this
+
+
+
+		if(!$news->save()) {
+			$news->add();	
+		}
+
+		$news->addProjects(array('id_project' => $project->id ));
 
 
 	}
