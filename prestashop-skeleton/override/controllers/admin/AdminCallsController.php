@@ -323,7 +323,129 @@ class AdminCallsControllerCore extends AdminController
 		return parent::renderForm();
 	}
 
+	public function processAdd()
+	{
+		parent::processAdd();
+
+		include_once(_PS_SWIFT_DIR_.'Swift.php');
+		include_once(_PS_SWIFT_DIR_.'Swift/Connection/SMTP.php');
+		include_once(_PS_SWIFT_DIR_.'Swift/Connection/NativeMail.php');
+		include_once(_PS_SWIFT_DIR_.'Swift/Plugin/Decorator.php');
+
+		$callKeywords = array_diff( array_map('trim', explode ( ',' , Tools::getValue('keywords_'.$this->context->language->id))), array(''));
+
+		$customers = Customer::getCustomers();
+		foreach ($customers as $customer) {
+			$customerKeywords = array_diff( array_map('trim', explode ( ',' , $customer["keywords"])), array(''));
+
+			foreach ($callKeywords as $keyword) {
+				if( in_array($keyword, $customerKeywords)) {
+					
+					//send mail
+					$researchersMail = $customer["email"];
+					$callTitle = Tools::getValue('title_'.$this->context->language->id);
+					//$url =
+					$subject = 'New funding call available';
+					$message = 'There is new funding call available and you may be intersted. Please visit http://www.es.mdh.se/calls and check out new call - '.$callTitle; 
+
+					try{
+						$result = Mail::sendMailTest("1", "smtp.gmail.com", $message, $subject, "text/html", $researchersMail, "do-not-reply@mdh.se", "testnotificationmailes@gmail.com", "es1234567", "465", "ssl");	
+					} catch (Swift_ConnectionException $e)
+					{
+						$result = $e->getMessage();
+					}
+					catch (Swift_Message_MimeException $e)
+					{
+						$result = $e->getMessage();
+					}
+					
+					
+					break;
+				}
+			}
+
+
+
+
+			// include_once(_PS_SWIFT_DIR_.'Swift.php');
+			// include_once(_PS_SWIFT_DIR_.'Swift/Connection/SMTP.php');
+			// include_once(_PS_SWIFT_DIR_.'Swift/Connection/NativeMail.php');
+			// include_once(_PS_SWIFT_DIR_.'Swift/Plugin/Decorator.php');
+					
+			// $smtpChecked= true;
+			// $smtpServer = 'smtp.google.com';
+			// $smtpPort = 465;
+			// $smtpEncryption =  Swift_Connection_SMTP::ENC_SSL;
+			// $smtpLogin = 'testnotificationmailes@gmail.com';
+			// $smtpPassword = 'es1234567';
+
+			// $result = Mail::sendMailTest($smtpChecked, $smtpServer, 'content', 'subject', 'text/plain', 'dmarusic35@gmail.com', $smtpLogin, $smtpLogin, $smtpPassword, $smtpPort, $smtpEncryption);
+
+
+
+			// $smtpChecked = (trim(Tools::getValue('mailMethod')) == 'smtp');
+			// $smtpServer = Tools::getValue('smtpSrv');
+			// $content = urldecode('test message');
+			// $content = utf8_encode(html_entity_decode($content));
+			// $subject = urldecode('subject');
+			// $type = 'text/html';
+			// $to = 'dmarusic35@gmail.com';
+			// $from = Configuration::get('PS_SHOP_EMAIL');
+			// $smtpLogin = Tools::getValue('smtpLogin');
+			// $smtpPassword = Tools::getValue('smtpPassword');
+			// $smtpPassword = (!empty($smtpPassword)) ? urldecode($smtpPassword) : Configuration::get('PS_MAIL_PASSWD');
+			// $smtpPort = Tools::getValue('smtpPort');
+			// $smtpEncryption = Tools::getValue('smtpEnc');
+
+			// $result = Mail::sendMailTest(Tools::htmlentitiesUTF8($smtpChecked), Tools::htmlentitiesUTF8($smtpServer), Tools::htmlentitiesUTF8($content), Tools::htmlentitiesUTF8($subject), Tools::htmlentitiesUTF8($type), Tools::htmlentitiesUTF8($to), Tools::htmlentitiesUTF8($from), Tools::htmlentitiesUTF8($smtpLogin), Tools::htmlentitiesUTF8($smtpPassword), Tools::htmlentitiesUTF8($smtpPort), Tools::htmlentitiesUTF8($smtpEncryption));
+			// $result = Mail::sendMailTest("1", "smtp.gmail.com", $message, $subject, "text/html", "dmarusic35@gmail.com", "do-not-reply@mdh.se", "testnotificationmailes@gmail.com", "es1234567", "465", "ssl");
+			// die($result === true ? 'ok' : $result);
+
+
+// 					$swift = null;
+// 		$result = false;
+		// try
+		// {
+			// if ($smtpChecked)
+			// {
+			// 	$smtp = new Swift_Connection_SMTP($smtpServer, $smtpPort, Swift_Connection_SMTP::ENC_SSL);
+			// 	$smtp->setUsername($smtpLogin);
+			// 	$smtp->setpassword($smtpPassword);
+			// 	$smtp->setTimeout(5);
+			// 	$swift = new Swift($smtp, 'gmail.com');
+			// }
+			// else
+			// 	$swift = new Swift(new Swift_Connection_NativeMail(), 'gmail.com');
+
+			// $message = new Swift_Message('subject', 'content', 'text/plain');
+
+			// if ($swift->send($message, $smtpLogin, 'dmarusic35@gmail.com'))
+			// 	$result = true;
+
+			// $swift->disconnect();
+		// }
+		// catch (Swift_ConnectionException $e)
+		// {
+		// 	$result = $e->getMessage();
+		// }
+		// catch (Swift_Message_MimeException $e)
+		// {
+		// 	$result = $e->getMessage();
+		// }
+
+			// ob_start();
+			// var_dump( $result );
+			// $data = ob_get_clean();
+			// $fp = fopen("test.txt", "w");
+			// fwrite($fp, $data);
+			// fclose($fp);
+
+	}
+
+
+
+
 
 }
 
-
+}

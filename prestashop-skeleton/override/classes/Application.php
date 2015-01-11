@@ -634,7 +634,7 @@ class ApplicationCore extends ObjectModel
 
 		$project->id_project_type = $application['id_project_type'];
 
-	 	$project->name = array((int)Configuration::get('PS_LANG_DEFAULT') => $application['name']);
+	 	$project->name = array((int)Configuration::get('PS_LANG_DEFAULT') => $application['name']);//TODO check if we must change ps_lang_default to context lang or smth like that ($this->context->language->id); same for all below
 
 	 	$project->totalBudget = ((int)$application['money_requested'] + (int)$application['mdhPartBudget']);
 		
