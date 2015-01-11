@@ -97,7 +97,7 @@ class ApplicationCore extends ObjectModel
 		if (!$id_lang)
 			$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
 		
-		$sql = 'SELECT DISTINCT a.*, al.`name`, al.`acronym`, al.`keywords`, al.`overview`, ptl.`name` AS type, asl.`name` AS status, cl.`title` AS call
+		$sql = 'SELECT DISTINCT a.*, al.`name`, al.`acronym`, al.`keywords`, al.`overview`, ptl.`name` AS type, apsl.`name` AS status, cl.`title` AS call_title
 		FROM `'._DB_PREFIX_.'application` a
 		LEFT JOIN `'._DB_PREFIX_.'application_lang` AS al ON (a.`id_application` = al.`id_application` AND al.`id_lang` = '.(int)$id_lang.')
 		LEFT JOIN `'._DB_PREFIX_.'project_type` pt ON a.`id_project_type` = pt.`id_project_type`
@@ -133,12 +133,12 @@ class ApplicationCore extends ObjectModel
 			$sql.=' AND ap.`id_partner`='.(int)$id_partner;
 		}
 		
-		$sql .= ' ORDER BY pl.`name` ASC';//psl.`name` ASC, 
+		$sql .= ' ORDER BY ptl.`name` ASC';//psl.`name` ASC, 
 		//echo $sql . '<br>'; 
 		$applications = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
 		
 		foreach ($applications as $k => $application)
-			$applications[$k]['members'] = Applications::getApplicationRelatedMembersById($application['id_application']); 
+			$applications[$k]['members'] = Application::getApplicationRelatedMembersById($application['id_application']); 
 		
 		return $applications;
 	}
