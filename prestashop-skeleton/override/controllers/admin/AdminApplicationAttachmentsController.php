@@ -158,7 +158,6 @@ class AdminApplicationAttachmentsControllerCore extends AdminController
 					'type' => 'textarea',
 					'label' => $this->l('Description:'),
 					'name' => 'description',
-					'lang' => true,
 					'autoload_rte' => true,
 					'cols' => 100,
 					'rows' => 10,
