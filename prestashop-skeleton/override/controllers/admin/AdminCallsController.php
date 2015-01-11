@@ -88,7 +88,9 @@ class AdminCallsControllerCore extends AdminController
         if ($this->display == 'edit' || $this->display == 'add' || $this->display == 'list')
 		{
 			$this->addjQueryPlugin(array('autocomplete'));
-			$this->addJS(array(_PS_JS_DIR_.'admin-calls.js')); //this is causing problems; probably should delete it 		
+
+			$this->addJS(array(_PS_JS_DIR_.'admin-calls.js'));
+
 		}
 	}
 
@@ -134,8 +136,9 @@ class AdminCallsControllerCore extends AdminController
 		$call_statuses = CallStatus::getCallStatuses($this->context->language->id);
 		
 		$funding_agencies = FundingAgency::getFundingAgencies($this->context->language->id);
+
+		$contacts = $call->getContacts();
 		
-        $contacts = $call->getContacts();
 
 		$this->fields_form = array(
 			'legend' => array(
@@ -257,14 +260,12 @@ class AdminCallsControllerCore extends AdminController
 
 				),	
 				array(
-
 					'type' => 'project_leaders',
 					'label' => $this->l('Contact person(s):'),
 					'project' => (int)Tools::getValue('id_call'),
 					'values' => $contacts,
 					'required' => false,
 					'desc' => $this->l('Select contact person(s)')
-
 				),	
 				array(
 					'type' => 'radio',
@@ -321,6 +322,7 @@ class AdminCallsControllerCore extends AdminController
 				
 		return parent::renderForm();
 	}
+
 
 }
 

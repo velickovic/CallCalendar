@@ -610,6 +610,50 @@ class ProjectCore extends ObjectModel
 		}
 		}
 	}
+
+	//Modified vesion of function addStaff because it doesnt work properly when 
+	//trying to make project from application and add staff contected to application to project staff
+	public function addStaffModified($leaders, $members, $associated)
+	{
+		if ($leaders && !empty($leaders)){
+		foreach ($leaders as $leader)
+		{
+			if((int)$leader>0){
+				$row = array('id_project' => (int)$this->id, 'id_customer' => (int)$leader['id_customer'], 'id_role' => 1);
+				Db::getInstance()->insert('customer_project', $row);
+				}
+		}
+		}
+		if ($members && !empty($members)){
+		foreach ($members as $member)
+		{
+		if((int)$member>0){
+			$row = array('id_project' => (int)$this->id, 'id_customer' => (int)$member['id_customer'], 'id_role' => 2);
+			Db::getInstance()->insert('customer_project', $row);
+			}
+		}
+		}
+		if ($associated && !empty($associated)){
+		foreach ($associated as $person)
+		{
+		if((int)$person>0){
+			$row = array('id_project' => (int)$this->id, 'id_customer' => (int)$person['id_customer'], 'id_role' => 3);
+			Db::getInstance()->insert('customer_project', $row);
+			}
+		}
+		}
+	}
+
+	//Modified vesion of function addStaff because it doesnt work properly when 
+	//trying to make project from application and add staff contected to application to project staff
+	public function addProjectPartnersModified($partners)
+	{
+		foreach ($partners as $partner)
+		{
+			$row = array('id_project' => (int)$this->id, 'id_partner' => (int)$partner['id_partner']);
+			Db::getInstance()->insert('project_partner', $row);
+		}
+	}
 	
 	
 }

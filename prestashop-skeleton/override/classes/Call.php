@@ -57,7 +57,7 @@ class CallCore extends ObjectModel
 
 	public $inputLeaders; //this is filed for call's contacts
 
-	
+
 	/**
 	 * @see ObjectModel::$definition
 	 */
@@ -101,13 +101,11 @@ class CallCore extends ObjectModel
 		LEFT JOIN `'._DB_PREFIX_.'call_status_lang` csl ON (csl.`id_call_status` = cs.`id_call_status` AND csl.`id_lang` = '.(int)$id_lang.')
 		LEFT JOIN `'._DB_PREFIX_.'funding_agency` fa ON c.`id_funding_agency` = fa.`id_funding_agency`
 		LEFT JOIN `'._DB_PREFIX_.'funding_agency_lang` fal ON (fal.`id_funding_agency` = fa.`id_funding_agency` AND fal.`id_lang` = '.(int)$id_lang.')';		
-		
-		if($id_contact)
 
+		if($id_contact)
 		{
 			$sql .= 'LEFT JOIN `'._DB_PREFIX_.'call_contact` AS cc ON (c.`id_call` = cc.`id_call`)';
 		}
-
 		$sql.='WHERE 1 ';
 		if ($id_status)
 		{
@@ -117,6 +115,11 @@ class CallCore extends ObjectModel
 		{
 			$sql .= ' AND c.`id_call_type` = ' . (int)$id_type;
 		}
+		if ($id_contact)
+		{
+			$sql .= ' AND cc.`id_customer` = "'. (int)$id_contact . '"';
+		}
+
 		if ($id_funding_agency)
 		{
 			$sql .= ' AND c.`id_funding_agency` = ' . (int)$id_funding_agency;
@@ -180,23 +183,18 @@ class CallCore extends ObjectModel
 		ORDER BY ctl.`name`, c.`id_call` ASC');
 	}
 
+
+
 	public static function getCallRelatedMembersById($id_call)
-
 	{
-
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
-
 			SELECT c.*, cc.`id_call`
-
 			FROM '._DB_PREFIX_.'customer c
-
 			LEFT JOIN `'._DB_PREFIX_.'call_contact` AS cc ON c.`id_customer` = cc.`id_customer`
-
 			WHERE cc.`id_call` = '.(int)$id_call.'
-
 			ORDER BY c.`firstname`, c.`lastname`');
-
 	}
+
 
 
 
@@ -211,7 +209,6 @@ class CallCore extends ObjectModel
 	}
 
 
-
 	public function update($nullValues = false)
 
 	{
@@ -220,6 +217,7 @@ class CallCore extends ObjectModel
 		{
 			$this->updateStaff($this->inputLeaders);
 			var_dump($this->inputLeaders);
+
 		}
 		return parent::update(true);
 
@@ -229,121 +227,104 @@ class CallCore extends ObjectModel
 
 	{
 		if (parent::delete())
-
 		{
 			Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'call_contact` WHERE `id_call` = '.(int)$this->id);
 			return true;
 		}
 
 		return false;
-
 	}
 
-
-
 	public static function getMembersStatic($id_call)
-
 	{
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
-
 			SELECT c.*
 			FROM '._DB_PREFIX_.'customer c
 			LEFT JOIN `'._DB_PREFIX_.'call_contact` AS cc ON c.`id_customer` = cc.`id_customer`
 			WHERE cc.`id_call` = '.(int)$id_call);
-
 	}
 
-
-
 	public function getMembers()
-
 	{
 		return Call::getMembersStatic((int)$this->id);
 	}
 
-
-
 	public function updateStaff( $contact )
-
 	{
+		
 		$contacts[] =null;
 		if($contact){
 		$exploded = explode('-', substr($contact, 0, -1));
 		foreach ($exploded as $item)
 			$contacts[] = $item;
 		}
+
 		$this->cleanStaff();
 		$this->addStaff($contacts);
+
+		return false;
+
 	}
 
-
-
 	public function cleanStaff()
-
 	{		
 		Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'call_contact` WHERE `id_call` = '.(int)$this->id);
 	}
 
 
-
 	public function addStaff($contacts)
-
 	{
 		if ($contacts && !empty($contacts)){
 		foreach ($contacts as $contact)
 		{
-
 			if((int)$contact>0){
 				$row = array('id_call' => (int)$this->id, 'id_customer' => (int)$contact['id_customer']);
 				Db::getInstance()->insert('call_contact', $row);
 				}
 		}
 		}
+		
 	}
 
-
-
 	public static function getContactsStatic($id_call)
-
 	{
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
 			SELECT c.*
 			FROM '._DB_PREFIX_.'customer c
 			LEFT JOIN `'._DB_PREFIX_.'call_contact` AS cc ON c.`id_customer` = cc.`id_customer`
 			WHERE cc.`id_call` = '.(int)$id_call);
-
 	}
-
 	
-
 	public function getContacts()
-
 	{
 		return Call::getContactsStatic((int)$this->id);
 	}
 
-
-
 	public static function getCallsContacts($id_call, $id_lang = 0) 
-
 	{
 		if (!$id_lang)
 			$id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
-
+		
 		$sql = 'SELECT c.`id_customer`, `email`,`url_private`, `firstname`, `lastname`, `phone`, `room`, GROUP_CONCAT(pl.`name` order by pl.name separator ",") as title
 			FROM `'._DB_PREFIX_.'customer` c
 			LEFT JOIN `'._DB_PREFIX_.'customer_position` AS pcp ON (pcp.id_customer=c.id_customer and (pcp.date_end is null or pcp.date_end=0 or pcp.date_end>curdate()))
 			LEFT JOIN `'._DB_PREFIX_.'position_lang` AS pl ON (pcp.`id_position` = pl.`id_position` AND pl.`id_lang` = '.(int)$id_lang.')';
+		
 		if($id_call)
 			$sql .= 'LEFT JOIN `'._DB_PREFIX_.'call_contact` AS cc ON (c.`id_customer` = cc.`id_customer`)';
+		
 		$sql.='WHERE c.deleted!=1 ';
+		
 		if ($id_call)
 		{
 			$sql .= ' AND cc.`id_call` = '.(int)$id_call;
 		}
+		
 		$sql .= ' GROUP BY c.id_customer';
+          
         $sql.=' ORDER BY c.`firstname`, c.`lastname` ASC';
+		
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
-
 	}
+
 }

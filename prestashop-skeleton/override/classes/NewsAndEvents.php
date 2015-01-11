@@ -126,7 +126,7 @@ class NewsAndEventsCore extends ObjectModel
 		return false;
 	}
 	
-	public function cleanRelationships(){
+	public function cleanRelationships() {
 		//first delete associations of this news/event with initiatives
 	//	Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'news_and_events_initiative` WHERE `id_news_and_events` = '.(int)$this->id);
 		//then projects
@@ -163,11 +163,14 @@ class NewsAndEventsCore extends ObjectModel
 	
 	public function addSpeakers($speakers)
 	{
+		
 		foreach ($speakers as $speaker)
 		{
-			if($speaker && (int)$speaker!=0)
-			$row = array('id_news_and_events' => (int)$this->id, 'id_speaker' => (int)$speaker);
-			Db::getInstance()->insert('news_and_events_speaker', $row);
+			if($speaker && (int)$speaker!=0){
+				$row = array('id_news_and_events' => (int)$this->id, 'id_speaker' => (int)$speaker);
+
+				Db::getInstance()->insert('news_and_events_speaker', $row);
+			}
 		}
 	}
 	

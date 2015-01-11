@@ -115,12 +115,8 @@
 			{if isset($call.requirements) && $call.requirements|@count > 0}
 				<li><a href="#tabs-2">Requirements</a></li>
 			{/if}
-			{if isset($call.partners) && $call.partners|@count > 0}
-				<li><a href="#tabs-3">Partners</a></li>
-			{/if}
-
 			{if isset($attachments) }
-				<li><a href="#tabs-4">Attachments</a></li>
+				<li><a href="#tabs-3">Attachments</a></li>
 			{/if}
 		</ul>
 	
@@ -134,6 +130,7 @@
 			{$call.requirements}
 		</div>	
 	{/if}
+
 	{if isset($attachments)}
 		<ul id="tabs-3" calss="bullet">
 			{foreach from=$attachments item=attachment}
@@ -152,7 +149,9 @@
 <!-- TODO add contact person here -->
 
 <div class = "right-column">
+
 	{if count($leaders) > 1}
+
 	<div style="margin-bottom: 20px">
 		<img class="logo" src="{$base_url}img/headers/call-contacts.png"/>
 		{foreach from=$leaders item=leader}
@@ -174,7 +173,7 @@
 		<br class="clearBoth">
 		{/foreach}
 	</div>
-	{else isset($leaders[0])}
+	{elseif isset($leaders[0])}
 	<div style="margin-bottom: 20px">
 		<div style="margin-left:100px; margin-bottom: -45px; position:relative; z-index:2;">
 			<img src="../img/staff/{$leaders[0].id_customer}-staff.jpg" style="width:105px;"/>
@@ -193,7 +192,7 @@
 		<br class="clearBoth">
 	</div>
 	{/if}
-	
+
 	{if isset($funding_agency) && $funding_agency|@count > 0}
 	<div style="margin-bottom: 20px">
 		<img class="logo" src="{$base_url}img/headers/funding-agencies.png" />
