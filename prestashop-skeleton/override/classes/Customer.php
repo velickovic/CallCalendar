@@ -92,7 +92,7 @@ class Customer extends CustomerCore
 			'external' => 					array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
 			'away' =>	 					array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
 			'subscription' =>	 			array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
-			'keywords' => 					array('type' => self::TYPE_STRING, 'lang' => true, 'required' => false, 'size' => 32),
+			'keywords' => 					array('type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml', 'required' => false, 'size' => 3999999999999),
 			
 		),
 	);				
