@@ -375,12 +375,16 @@ class AdminCustomersController extends AdminCustomersControllerCore
 					'desc' => $this->l('Subscription to notifications about projects:')
 				),	
 				array(
-					'type' => 'text',
+					'type' => 'textarea',
 					'label' => $this->l('Keywords:'),
 					'name' => 'keywords',
 					'lang' => true,
-					'size' => 33,
+					'desc' => 'Split keywords with comma ( , )',
 					'required' => false,
+					'lang' => true,
+					'cols' => 100,
+					'rows' => 10,
+					'class' => 'rte'
 				)				
 			)
 		);

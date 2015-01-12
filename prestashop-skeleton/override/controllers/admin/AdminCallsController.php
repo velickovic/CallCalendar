@@ -176,6 +176,7 @@ class AdminCallsControllerCore extends AdminController
 					'rows' => 10,
 					'class' => 'rte',
 					'required' => true,
+					'desc' => 'Split keywords with comma ( , )',
 					'hint' => $this->l('Invalid characters:').' <>;=#{}'
 				),
 				array(
